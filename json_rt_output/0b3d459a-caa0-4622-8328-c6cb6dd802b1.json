@@ -1,0 +1,154 @@
+{
+ "accountAddress": {
+  "Address": "7382 South Shorehaven, Parkerland, North Carolina 29397",
+  "Street": "7382 South Shorehaven",
+  "City": "Parkerland",
+  "State": "North Carolina",
+  "Zip": "29397",
+  "Country": "Bosnia and Herzegovina",
+  "Latitude": 1.9356928281569918,
+  "Longitude": 29.199754636132944
+ },
+ "accountAgentAddress": {
+  "Address": "1977 West Commonchester, Zitahaven, Michigan 73184",
+  "Street": "1977 West Commonchester",
+  "City": "Zitahaven",
+  "State": "Michigan",
+  "Zip": "73184",
+  "Country": "Philippines",
+  "Latitude": 20.37397313530881,
+  "Longitude": -7.816750606331575
+ },
+ "accountAgentId": "3903d32f-eda0-4e02-9d57-5c9a01622a64",
+ "accountAgentName": "",
+ "accountBalanceAfter": "",
+ "accountEntityId": "",
+ "accountId": "b5fe6816-7e79-42f6-89fa-67f14eeee0a2",
+ "accountName": "",
+ "amount": {
+  "baseCurrency": "zar",
+  "baseValue": 562.09,
+  "currency": "zar",
+  "value": 562.09
+ },
+ "cardEntityId": "6589787713507376CarSupplier",
+ "cardId": "4530850328607459",
+ "channel": "",
+ "chargeBearer": "SLEV",
+ "counterpartyAddress": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "counterpartyAgentAddress": {
+  "Address": "169 Lake Fallstown, Malachiport, Maine 53137",
+  "Street": "169 Lake Fallstown",
+  "City": "Malachiport",
+  "State": "Maine",
+  "Zip": "53137",
+  "Country": "Puerto Rico",
+  "Latitude": 68.00220591983724,
+  "Longitude": 175.66591663705628
+ },
+ "counterpartyAgentId": "",
+ "counterpartyAgentName": "",
+ "counterpartyEntityId": "67",
+ "counterpartyId": "28",
+ "counterpartyName": "CnA",
+ "creationDate": "2023-05-24T21:08:42",
+ "customerEntityId": "customerEntityId_1",
+ "customerId": "8ce63462-22f8-4533-aaf7-9ba335f04639",
+ "decorationId": "",
+ "destinationCountry": "ZAF",
+ "device": "",
+ "deviceEntityId": "",
+ "deviceId": "IMEACode",
+ "direction": "Outbound",
+ "eventId": "0b3d459a-caa0-4622-8328-c6cb6dd802b1",
+ "eventTime": "2023-05-24T21:08:42",
+ "eventType": "paymentRT",
+ "finalPaymentDate": "2023-05-24",
+ "fromFIBranchId": "",
+ "fromId": "",
+ "instructedAgentAddress": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "instructedAgentId": "d1b8475a-28bc-4aba-add1-31a55eb71573",
+ "instructedAgentName": "",
+ "instructingAgentAddress": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "instructingAgentId": "9bcc1f79-895f-4d51-8dea-fdf951c57992",
+ "instructingAgentName": "",
+ "intermediaryAgent1AccountId": "01bd2099-d8da-4f74-a060-fc81b872090f",
+ "intermediaryAgent1Address": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "intermediaryAgent1Id": "57ca14b2-9756-4eda-bb2f-271c5e807d2c",
+ "intermediaryAgent1Name": "",
+ "intermediaryAgent2AccountId": "126aec1b-fadd-4ad9-a13e-540453a8e49e",
+ "intermediaryAgent2Address": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "intermediaryAgent2Id": "6e79f515-ff7b-4b36-b91d-cf505de1366e",
+ "intermediaryAgent2Name": "",
+ "intermediaryAgent3AccountId": "482d1a48-eb90-4649-b3c4-ae4a0f58f9fb",
+ "intermediaryAgent3Address": {
+  "Code": "2002",
+  "POBox": "1244"
+ },
+ "intermediaryAgent3Id": "2363f770-fafe-4ec1-811a-043e91db0863",
+ "intermediaryAgent3Name": "",
+ "localInstrument": "",
+ "msgStatus": "New",
+ "msgStatusReason": "New Payee",
+ "msgType": "2100",
+ "numberOfTransactions": 1,
+ "paymentClearingSystemReference": "",
+ "paymentFrequency": "DAIL",
+ "paymentMethod": "",
+ "paymentReference": "",
+ "remittanceId": "",
+ "remittanceLocationElectronicAddress": {
+  "Code": "2001",
+  "POBox": "1244"
+ },
+ "remittanceLocationMethod": "SMSM",
+ "requestExecutionDate": "2023-05-24",
+ "schemaVersion": 1,
+ "serviceLevelCode": "",
+ "settlementClearingSystemCode": "",
+ "settlementDate": "2023-05-24",
+ "settlementMethod": "INDA",
+ "tenantId": "270005",
+ "toFIBranchId": "270002",
+ "toId": "270002",
+ "totalAmount": {
+  "baseCurrency": "zar",
+  "baseValue": 562.09,
+  "currency": "zar",
+  "value": 562.09
+ },
+ "transactionId": "17d67979-7b19-4f25-bd4e-778721d01d60",
+ "transactionType": "PayByProxy",
+ "ultimateAccountAddress": {
+  "Code": "2011",
+  "POBox": "1244"
+ },
+ "ultimateAccountId": "",
+ "ultimateAccountName": "",
+ "ultimateCounterpartyAddress": {
+  "Code": "1221",
+  "POBox": "1244"
+ },
+ "ultimateCounterpartyId": "",
+ "ultimateCounterpartyName": "",
+ "unstructuredRemittanceInformation": "",
+ "verificationResult": "FAIL",
+ "verificationType": {
+  "Type": "1244"
+ }
+}

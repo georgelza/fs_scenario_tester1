@@ -22,6 +22,13 @@
 *									- destined for a desktop vs a app for a K8S server which prefers environment vars.
 *					:				- https://onexlab-io.medium.com/golang-config-file-best-practise-d27d6a97a65a
 *
+*					: 24 May 2023	- Moved the seed data to a json structure seed.json thats ready in and then utilised instead of the seed package
+*					:				- Modifying the payment structure to be aligned with Kiveshan's excell spread sheet, Makes for better down the line
+*					:				- Fake data generation.
+*					:				- also introduced the min and max transaction values.
+*					:				- This required that I split the paymentNRT andpaymentRT into 2 dif functions as they are VERY different.
+*
+*
 *	By				: George Leonard (georgelza@gmail.com)
 *
 *	jsonformatter 	: https://jsonformatter.curiousconcept.com/#
@@ -213,7 +220,6 @@ func printConfig(vGeneral types.Tp_general) {
 	grpcLog.Info("* Output path is\t\t", vGeneral.Output_path)
 	grpcLog.Info("* Read JSON from file is\t", vGeneral.Json_from_file)
 	grpcLog.Info("* Input path is\t\t", vGeneral.Input_path)
-	grpcLog.Info("* CreateNewAccount is\t\t", vGeneral.CreateNewAccount)
 	grpcLog.Info("* MinTransactionValue is\tR ", vGeneral.MinTransactionValue)
 	grpcLog.Info("* MaxTransactionValue is\tR ", vGeneral.MaxTransactionValue)
 	grpcLog.Info("* SeedFile is\t\t\t", vGeneral.SeedFile)
@@ -242,8 +248,7 @@ func prettyJSON(ms string) {
 
 }
 
-// This was originally in main body, pulled it out here to show how we can construct the payload or parts
-// in external sections and then bring it back
+// paymentNRT payload build
 func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 
 	// We just using gofakeit to pad the json document size a bit.
@@ -253,14 +258,6 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 
 	gofakeit.Seed(time.Now().UnixNano())
 	gofakeit.Seed(0)
-
-	// Lets start building the various bits that comprises the engineResponse JSON Doc
-	// This is the original inbound event, will be 2, 1 for outbound bank and 1 for inbound bank out
-	//
-
-	//nAmount := gofakeit.Price(0, 999999999)
-	//cMerchant = seed.GetGoodEntityId()[gofakeit.Number(1, 83)]
-	//cDirection := seed.GetDirection()[gofakeit.Number(1, 2)]
 
 	nAmount := gofakeit.Price(vGeneral.MinTransactionValue, vGeneral.MaxTransactionValue)
 	t_amount := &types.TPamount{
@@ -319,6 +316,7 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 	return t_Payment
 }
 
+// paymentRT payload build
 func contructPaymentRTFromFake() (t_Payment map[string]interface{}) {
 
 	// We just using gofakeit to pad the json document size a bit.
@@ -337,52 +335,118 @@ func contructPaymentRTFromFake() (t_Payment map[string]interface{}) {
 		Value:        nAmount,
 	}
 
-	cMerchant := varSeed.GoodEntities[gofakeit.Number(1, 83)].EntityId
-	cTransType := varSeed.TransactionTypes[gofakeit.Number(4, 6)]
-	cDirection := varSeed.Direction[gofakeit.Number(0, 1)]
-	toID := varSeed.Tenants[gofakeit.Number(0, 4)]    // tenants - to Bank
-	cTenant := varSeed.Tenants[gofakeit.Number(0, 4)] // tenants - From Banks
+	toID := varSeed.Tenants[gofakeit.Number(0, 4)].TenantId    // tenants - to Bank
+	cTenant := varSeed.Tenants[gofakeit.Number(0, 4)].TenantId // tenants - From Banks
+
+	instructedAgentId := gofakeit.Number(0, 5)
+	instructingAgentId := gofakeit.Number(0, 5)
+	intermediaryAgent1Id := gofakeit.Number(0, 5)
+	intermediaryAgent2Id := gofakeit.Number(0, 5)
+	intermediaryAgent3Id := gofakeit.Number(0, 5)
 
 	// We ust showing 2 ways to construct a JSON document to be Marshalled, this is the first using a map/interface,
 	// followed by using a set of struct objects added together.
 	t_Payment = map[string]interface{}{
-		"accountAgentId":                 strconv.Itoa(rand.Intn(6)),
-		"accountAgentName":               "",
-		"accountEntityId":                strconv.Itoa(rand.Intn(6)),
-		"accountId":                      cMerchant,
-		"amount":                         t_amount,
-		"chargeBearer":                   "SLEV",
+		"accountAddress":      gofakeit.Address(),
+		"accountAgentAddress": gofakeit.Address(),
+		"accountAgentId":      uuid.New().String(),
+		"accountAgentName":    "",
+		"accountBalanceAfter": "",
+		"accountEntityId":     "",
+		"accountId":           uuid.New().String(),
+		"accountName":         "",
+		"amount":              t_amount,
+		"cardEntityId":        strconv.Itoa(gofakeit.CreditCardNumber()) + "CarSupplier",
+		"cardId":              strconv.Itoa(gofakeit.CreditCardNumber()),
+		"channel":             "",
+		"chargeBearer":        varSeed.ChargeBearers[gofakeit.Number(0, 3)],
+		"counterpartyAddress": map[string]interface{}{
+			"POBox": "1244",
+			"Code":  "2000",
+		},
+		"counterpartyAgentAddress":       gofakeit.Address(),
 		"counterpartyAgentId":            "",
-		"counterpartyEntityId":           strconv.Itoa(gofakeit.Number(0, 9999)),
+		"counterpartyAgentName":          "",
+		"counterpartyEntityId":           varSeed.GoodEntities[gofakeit.Number(1, 83)].EntityId,
+		"counterpartyId":                 varSeed.GoodEntities[gofakeit.Number(1, 83)].Id,
+		"counterpartyName":               varSeed.GoodEntities[gofakeit.Number(1, 83)].Name,
+		"creationDate":                   time.Now().Format("2006-01-02T15:04:05"),
 		"customerEntityId":               "customerEntityId_1",
-		"counterpartyId":                 strconv.Itoa(gofakeit.Number(10000, 19999)),
-		"creationTime":                   time.Now().Format("2006-01-02T15:04:05"),
+		"customerId":                     uuid.New().String(),
+		"decorationId":                   "",
 		"destinationCountry":             "ZAF",
-		"direction":                      cDirection,
+		"device":                         "",
+		"deviceEntityId":                 "",
+		"deviceId":                       "IMEACode",
+		"direction":                      varSeed.Direction[gofakeit.Number(0, 1)],
 		"eventId":                        uuid.New().String(),
 		"eventTime":                      time.Now().Format("2006-01-02T15:04:05"),
 		"eventType":                      "paymentRT",
+		"finalPaymentDate":               time.Now().Format("2006-01-02"),
 		"fromFIBranchId":                 "",
-		"fromId":                         cTenant,
-		"localInstrument":                "42",
-		"msgStatus":                      "Success",
-		"msgType":                        "RCCT",
+		"fromId":                         "",
+		"instructedAgentId":              varSeed.Agent[instructedAgentId].Id,
+		"instructedAgentName":            varSeed.Agent[instructedAgentId].Name,
+		"instructedAgentAddress":         varSeed.Agent[instructedAgentId].Address,
+		"instructingAgentId":             varSeed.Agent[instructingAgentId].Id,
+		"instructingAgentName":           varSeed.Agent[instructingAgentId].Name,
+		"instructingAgentAddress":        varSeed.Agent[instructingAgentId].Address,
+		"intermediaryAgent1Id":           varSeed.Agent[intermediaryAgent1Id].Id,
+		"intermediaryAgent1Name":         varSeed.Agent[intermediaryAgent1Id].Name,
+		"intermediaryAgent1Address":      varSeed.Agent[intermediaryAgent1Id].Address,
+		"intermediaryAgent1AccountId":    varSeed.Agent[intermediaryAgent1Id].AccountId,
+		"intermediaryAgent2Id":           varSeed.Agent[intermediaryAgent2Id].Id,
+		"intermediaryAgent2Name":         varSeed.Agent[intermediaryAgent2Id].Name,
+		"intermediaryAgent2Address":      varSeed.Agent[intermediaryAgent2Id].Address,
+		"intermediaryAgent2AccountId":    varSeed.Agent[intermediaryAgent2Id].AccountId,
+		"intermediaryAgent3Id":           varSeed.Agent[intermediaryAgent3Id].Id,
+		"intermediaryAgent3Name":         varSeed.Agent[intermediaryAgent3Id].Name,
+		"intermediaryAgent3Address":      varSeed.Agent[intermediaryAgent3Id].Address,
+		"intermediaryAgent3AccountId":    varSeed.Agent[intermediaryAgent3Id].AccountId,
+		"localInstrument":                "",
+		"msgStatus":                      "New", //
+		"msgStatusReason":                "New Payee",
+		"msgType":                        "2100",
 		"numberOfTransactions":           1,
-		"paymentClearingSystemReference": 2,
-		"paymentMethod":                  "TRF",
-		"paymentReference":               "sdfsfd",
-		"remittanceId":                   "sdfsdsd",
-		"requestExecutionDate":           time.Now().Format("2006-01-02"),
-		"schemaVersion":                  1,
-		"settlementClearingSystemCode":   "RTC",
-		"settlementDate":                 time.Now().Format("2006-01-02"),
-		"settlementMethod":               "CLRG",
-		"tenantId":                       toID,
-		"toFIBranchId":                   toID,
-		"toId":                           toID,
-		"totalAmount":                    t_amount,
-		"transactionId":                  uuid.New().String(),
-		"transactionType":                cTransType,
+		"paymentClearingSystemReference": "",
+		"paymentFrequency":               varSeed.PaymentFrequency[gofakeit.Number(0, 8)],
+		"paymentMethod":                  "",
+		"paymentReference":               "",
+		"remittanceId":                   "",
+		"remittanceLocationElectronicAddress": map[string]interface{}{
+			"POBox": "1244",
+			"Code":  "2001",
+		},
+		"remittanceLocationMethod":     varSeed.RemittanceLocationMethod[gofakeit.Number(0, 5)],
+		"requestExecutionDate":         time.Now().Format("2006-01-02"),
+		"schemaVersion":                1,
+		"serviceLevelCode":             "",
+		"settlementClearingSystemCode": "",
+		"settlementDate":               time.Now().Format("2006-01-02"),
+		"settlementMethod":             varSeed.SettlementMethod[gofakeit.Number(0, 3)],
+		"tenantId":                     cTenant,
+		"toFIBranchId":                 toID,
+		"toId":                         toID,
+		"totalAmount":                  t_amount,
+		"transactionId":                uuid.New().String(),
+		"transactionType":              varSeed.TransactionTypes[gofakeit.Number(4, 6)],
+		"ultimateAccountAddress": map[string]interface{}{
+			"POBox": "1244",
+			"Code":  "2011",
+		},
+		"ultimateAccountId":   "",
+		"ultimateAccountName": "",
+		"ultimateCounterpartyAddress": map[string]interface{}{
+			"POBox": "1244",
+			"Code":  "1221",
+		},
+		"ultimateCounterpartyId":            "",
+		"ultimateCounterpartyName":          "",
+		"unstructuredRemittanceInformation": "",
+		"verificationResult":                varSeed.VerificationResult[gofakeit.Number(0, 8)],
+		"verificationType": map[string]interface{}{
+			"Type": "1244",
+		},
 	}
 
 	return t_Payment
@@ -571,14 +635,17 @@ func runLoader() {
 		// Build the entire JSON Payload document, either a fake record or from a input/scenario JSON file
 		if vGeneral.Json_from_file == 0 { // Build Fake Record
 
-			// t_Payment, cTenant, cMerchant := contructPaymentNrt()
 			if vGeneral.Eventtype == "paymentNRT" {
+				// They are just to different to have kept in one function, so split them into 2 seperate specific use case functions.
 				t_Payment = contructPaymentNRTFromFake()
+
 			} else {
 				t_Payment = contructPaymentRTFromFake()
 
 			}
-		} else { // returnedRecs is a map of file names, each filename is JSON document which contains a FS Payment event
+		} else {
+			// returnedRecs is a map of file names, each filename is JSON document which contains a FS Payment event,
+			// At this point we simply post the contents of the payment onto the end point, and record the response.
 			filename := vGeneral.Input_path + "/" + returnedRecs[count]
 			if vGeneral.Debuglevel > 2 {
 				grpcLog.Infoln("Source Event          :", filename)
@@ -632,8 +699,9 @@ func runLoader() {
 				grpcLog.Infoln("response Status       :", response.Status)
 				grpcLog.Infoln("response Headers      :", response.Header)
 				if response.Status == "200 OK" {
-					json.Unmarshal(body, &tBody)
+					// if 200 then we know it's a paymentRT
 
+					json.Unmarshal(body, &tBody)
 					if vGeneral.Echojson == 1 {
 						grpcLog.Infoln("response Body        :")
 						prettyJSON(string(body))
@@ -644,8 +712,9 @@ func runLoader() {
 					}
 
 				} else if response.Status == "204 No Content" {
-					grpcLog.Infoln("response Body         : paymentNRT")
+					// it's a paymentNRT
 
+					grpcLog.Infoln("response Body         : paymentNRT")
 					tBody = map[string]interface{}{
 						"eventId":         t_Payment["eventId"],
 						"eventType":       t_Payment["eventType"],
@@ -655,8 +724,9 @@ func runLoader() {
 					}
 
 				} else {
-					grpcLog.Infoln("response Body         : FAILED POST")
+					// oh sh$t
 
+					grpcLog.Infoln("response Body         : FAILED POST")
 					tBody = map[string]interface{}{
 						"eventId":         t_Payment["eventId"],
 						"eventType":       t_Payment["eventType"],
@@ -720,6 +790,7 @@ func runLoader() {
 		}
 		if vGeneral.Call_fs_api == 1 {
 			grpcLog.Infoln("API Call Time         :", time.Since(txnStart).Seconds(), "Sec")
+
 		}
 		//////////////////////////////////////////////////
 		// THIS IS SLEEP BETWEEN RECORD POSTS

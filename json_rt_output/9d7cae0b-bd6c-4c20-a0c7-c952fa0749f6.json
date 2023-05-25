@@ -1,0 +1,154 @@
+{
+ "accountAddress": {
+  "Address": "20113 Knollberg, Jenkinsside, Connecticut 88022",
+  "Street": "20113 Knollberg",
+  "City": "Jenkinsside",
+  "State": "Connecticut",
+  "Zip": "88022",
+  "Country": "Nicaragua",
+  "Latitude": -86.21552870394326,
+  "Longitude": 93.66316536816203
+ },
+ "accountAgentAddress": {
+  "Address": "77521 East Orchardburgh, Alvisside, Montana 65565",
+  "Street": "77521 East Orchardburgh",
+  "City": "Alvisside",
+  "State": "Montana",
+  "Zip": "65565",
+  "Country": "Antigua and Barbuda",
+  "Latitude": 16.47216860788823,
+  "Longitude": -125.05579577679566
+ },
+ "accountAgentId": "2b8771e8-d00f-48ea-9d79-74d3531686da",
+ "accountAgentName": "",
+ "accountBalanceAfter": "",
+ "accountEntityId": "",
+ "accountId": "8f604b3e-840f-44cb-a66a-fb2774cd0567",
+ "accountName": "",
+ "amount": {
+  "baseCurrency": "zar",
+  "baseValue": 568.58,
+  "currency": "zar",
+  "value": 568.58
+ },
+ "cardEntityId": "345216287076122CarSupplier",
+ "cardId": "2221008491519055",
+ "channel": "",
+ "chargeBearer": "SLEV",
+ "counterpartyAddress": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "counterpartyAgentAddress": {
+  "Address": "138 Port Damfurt, East Dare, Idaho 81487",
+  "Street": "138 Port Damfurt",
+  "City": "East Dare",
+  "State": "Idaho",
+  "Zip": "81487",
+  "Country": "Jordan",
+  "Latitude": -39.1669417977764,
+  "Longitude": 9.0060859545817
+ },
+ "counterpartyAgentId": "",
+ "counterpartyAgentName": "",
+ "counterpartyEntityId": "20",
+ "counterpartyId": "22",
+ "counterpartyName": "CnA",
+ "creationDate": "2023-05-24T21:08:37",
+ "customerEntityId": "customerEntityId_1",
+ "customerId": "56313a26-667d-453e-80fa-870026c9467e",
+ "decorationId": "",
+ "destinationCountry": "ZAF",
+ "device": "",
+ "deviceEntityId": "",
+ "deviceId": "IMEACode",
+ "direction": "Outbound",
+ "eventId": "9d7cae0b-bd6c-4c20-a0c7-c952fa0749f6",
+ "eventTime": "2023-05-24T21:08:37",
+ "eventType": "paymentRT",
+ "finalPaymentDate": "2023-05-24",
+ "fromFIBranchId": "",
+ "fromId": "",
+ "instructedAgentAddress": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "instructedAgentId": "9d66da39-bd0e-4730-b059-e5636d625dac",
+ "instructedAgentName": "",
+ "instructingAgentAddress": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "instructingAgentId": "775e3ec8-15d8-4603-b6c7-67fd2ea9f67c",
+ "instructingAgentName": "",
+ "intermediaryAgent1AccountId": "28d9dae8-9b26-4d43-8fe7-24bd653bbe14",
+ "intermediaryAgent1Address": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "intermediaryAgent1Id": "7c0491fe-9fc6-4ded-905a-8edfca420b1d",
+ "intermediaryAgent1Name": "",
+ "intermediaryAgent2AccountId": "4bf1c818-7365-412a-8617-8cb5c3eff898",
+ "intermediaryAgent2Address": {
+  "Code": "2000",
+  "POBox": "1244"
+ },
+ "intermediaryAgent2Id": "a5c454a2-3589-49f9-b462-8bdb9aafbc4e",
+ "intermediaryAgent2Name": "",
+ "intermediaryAgent3AccountId": "f217aac5-17e4-44ea-baa0-654ebd932c99",
+ "intermediaryAgent3Address": {
+  "Code": "2002",
+  "POBox": "1244"
+ },
+ "intermediaryAgent3Id": "bda0b058-e4f9-456e-a742-97ec0195dd00",
+ "intermediaryAgent3Name": "",
+ "localInstrument": "",
+ "msgStatus": "New",
+ "msgStatusReason": "New Payee",
+ "msgType": "2100",
+ "numberOfTransactions": 1,
+ "paymentClearingSystemReference": "",
+ "paymentFrequency": "MIAN",
+ "paymentMethod": "",
+ "paymentReference": "",
+ "remittanceId": "",
+ "remittanceLocationElectronicAddress": {
+  "Code": "2001",
+  "POBox": "1244"
+ },
+ "remittanceLocationMethod": "EMAL",
+ "requestExecutionDate": "2023-05-24",
+ "schemaVersion": 1,
+ "serviceLevelCode": "",
+ "settlementClearingSystemCode": "",
+ "settlementDate": "2023-05-24",
+ "settlementMethod": "INDA",
+ "tenantId": "270001",
+ "toFIBranchId": "270002",
+ "toId": "270002",
+ "totalAmount": {
+  "baseCurrency": "zar",
+  "baseValue": 568.58,
+  "currency": "zar",
+  "value": 568.58
+ },
+ "transactionId": "ae715301-a112-4ab8-95f6-7cfb92ecaf0d",
+ "transactionType": "PayByAccount",
+ "ultimateAccountAddress": {
+  "Code": "2011",
+  "POBox": "1244"
+ },
+ "ultimateAccountId": "",
+ "ultimateAccountName": "",
+ "ultimateCounterpartyAddress": {
+  "Code": "1221",
+  "POBox": "1244"
+ },
+ "ultimateCounterpartyId": "",
+ "ultimateCounterpartyName": "",
+ "unstructuredRemittanceInformation": "",
+ "verificationResult": "PART",
+ "verificationType": {
+  "Type": "1244"
+ }
+}

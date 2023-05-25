@@ -19,7 +19,6 @@ type Tp_general struct {
 	Output_path         string  // output location
 	Json_from_file      int     // Do we read JSON from input_path directory and post to FS API endpoint
 	Input_path          string  // Where are my scenario JSON files located
-	CreateNewAccount    string  // Do we want to use the same AccountNumber for each transaction of a client, or spin up a new AccountNumber every run - Not thought through yet....
 	MinTransactionValue float64 // Min value if the fake transaction
 	MaxTransactionValue float64 // Max value of the fake transaction
 	SeedFile            string  // Which seed file to read in
@@ -84,51 +83,142 @@ type TPaymentNRT = struct {
 
 type TPAddress struct {
 }
-
+type TVerificationType struct {
+}
 type TPaymentRT struct {
-	AccountAddress      TPAddress `json:"accountAddress,omitempty"`
-	AccountAgentAddress TPAddress `json:"accountAgentAddress,omitempty"`
-	AccountAgentId      string    `json:"accountAgentId,omitempty"`
-	AccountAgentName    string    `json:"accountAgent,omitempty"`
+	AccountAddress                      TPAddress         `json:"accountAddress,omitempty"`
+	AccountAgentAddress                 TPAddress         `json:"accountAgentAddress,omitempty"`
+	AccountAgentId                      string            `json:"accountAgentId,omitempty"`
+	AccountAgentName                    string            `json:"accountAgent,omitempty"`
+	AccountBalanceAfter                 string            `json:"accountBalanceAfter,omitempty"`
+	AccountEntityId                     string            `json:"accountEntity"`
+	AccountId                           string            `json:"accountId,omitempty"`
+	AccountName                         string            `json:"accountName,omitempty"`
+	Amount                              TPamount          `json:"amount,omitempty"`
+	CardEntityId                        string            `json:"cardEntityId,omitempty"`
+	CardId                              string            `json:"cardId,omitempty"`
+	Channel                             string            `json:"channel,omitempty"`
+	ChargeBearer                        string            `json:"chargeBearer,omitempty"`
+	CounterpartyAddress                 TPAddress         `json:"CounterpartyAddress,omitempty"`
+	CounterpartyAgentAddress            TPAddress         `json:"counterpartyAgentAddress,omitempty"`
+	CounterpartyAgentId                 string            `json:"counterpartyAgentId,omitempty"`
+	CounterpartyAgentName               string            `json:"counterPartyAgentName"`
+	CounterpartyEntityId                string            `json:"counterPartyEntityId,omitempty"`
+	CounterpartyId                      string            `json:"counterPartyId,omitempty"`
+	CounterpartyName                    string            `json:"counterPartyName,omitempty"`
+	CreationDate                        string            `json:"creationDate"`
+	CustomerEntityId                    string            `json:"customerEntityId,omitempty"`
+	CustomerId                          string            `json:"customerId,omitempty"`
+	DecorationId                        string            `json:"decorationId,omitempty"`
+	DestinationCountry                  string            `json:"destinationCountry,omitempty"`
+	Device                              string            `json:"device,omitempty"`
+	DeviceEntityId                      string            `json:"deviceEntityId,omitempty"`
+	DeviceId                            string            `json:"deviceId,omitempty"`
+	Direction                           string            `json:"direction,omitempty"`
+	EventId                             string            `json:"eventId,omitempty"`
+	EventTime                           string            `json:"eventTime,omitempty"`
+	EventType                           string            `json:"eventType,omitempty"`
+	FinalPaymentDate                    string            `json:"finalPaymentDate,omitempty"`
+	FromFIBranchId                      string            `json:"fromFIBranchId,omitempty"`
+	FromId                              string            `json:"fromId,omitempty"`
+	InstructedAgentAddress              TPAddress         `json:"instructedAgentAddress,omitempty"`
+	InstructedAgentId                   string            `json:"instructedAgentId,omitempty"`
+	InstructedAgentName                 string            `json:"instructedAgentName,omitempty"`
+	InstructingAgentAddress             TPAddress         `json:"instructingAgentAddress,omitempty"`
+	InstructingAgentId                  string            `json:"instructingAgentId,omitempty"`
+	InstructingAgentName                string            `json:"instructingAgentName,omitempty"`
+	IntermediaryAgent1AccountId         string            `json:"intermediaryAgent1AccountId,omitempty"`
+	IntermediaryAgent1Address           TPAddress         `json:"intermeduartAgent1Address,omitempty"`
+	IntermediaryAgent1Id                string            `json:"intermediaryAgent1Id,omitempty"`
+	IntermediaryAgent1Name              string            `json:"intermediaryAgent1Name,omitempty"`
+	IntermediaryAgent2AccountId         string            `json:"intermediaryAgent2AccountId,omitempty"`
+	IntermediaryAgent2Address           TPAddress         `json:"intermeduartAgent2Address,omitempty"`
+	IntermediaryAgent2Id                string            `json:"intermediaryAgent2Id,omitempty"`
+	IntermediaryAgent2Name              string            `json:"intermediaryAgent2Name,omitempty"`
+	IntermediaryAgent3AccountId         string            `json:"intermediaryAgent3AccountId,omitempty"`
+	IntermediaryAgent3Address           TPAddress         `json:"intermeduartAgent3Address,omitempty"`
+	IntermediaryAgent3Id                string            `json:"intermediaryAgent3Id,omitempty"`
+	IntermediaryAgent3Name              string            `json:"intermediaryAgent3Name,omitempty"`
+	LocalInstrument                     string            `json:"localInstrument,omitempty"`
+	MsgStatus                           string            `json:"msgStatus,omitempty"`
+	MsgStatusReason                     string            `json:"msgStatusReason,omitempty"`
+	MsgType                             string            `json:"msgType,omitempty"`
+	NumberOfTransactions                int               `json:"numberOfTransactions,omitempty"`
+	PaymentClearingSystemReference      string            `json:"paymentClearingSystemReference,omitempty"`
+	PaymentFrequency                    string            `json:"paymentFrequency,omitempty"`
+	PaymentMethod                       string            `json:"paymentMethod,omitempty"`
+	PaymentReference                    string            `json:"paymentReference,omitempty"`
+	RemittanceId                        string            `json:"payRemittanceIdmentMethod,omitempty"`
+	RemittanceLocationElectronicAddress string            `json:"remittanceLocationElectronicAddress,omitempty"`
+	RemittanceLocationMethod            string            `json:"remittanceLocationMethod,omitempty"`
+	RequestExecutionDate                string            `json:"paymentMRequestExecutionDateethod,omitempty"`
+	SchemaVersion                       int               `json:"schemaVersion,omitempty"`
+	ServiceLevelCode                    string            `json:"serviceLevelCode,omitempty"`
+	SettlementClearingSystemCode        string            `json:"settlementClearingSystemCode,omitempty"`
+	SettlementDate                      string            `json:"settlementDate,omitempty"`
+	SettlementMethod                    string            `json:"settlementMethod,omitempty"`
+	TenantId                            string            `json:"tenantId,omitempty"`
+	ToFIBranchId                        string            `json:"toFIBranchId,omitempty"`
+	ToId                                string            `json:"toId,omitempty"`
+	TotalAmount                         TPamount          `json:"totalAmount,omitempty"`
+	TransactionId                       string            `json:"transactionId,omitempty"`
+	TransactionType                     string            `json:"transactionType,omitempty"`
+	UltimateAccountAddress              TPAddress         `json:"ultimateAccountAddress,omitempty"`
+	UltimateAccountId                   string            `json:"ultimateAccountId,omitempty"`
+	UltimateAccountName                 string            `json:"ultimateAccountName,omitempty"`
+	UltimateCounterpartyAddress         TPAddress         `json:"ultimateCounterpartyAddress,omitempty"`
+	UltimateCounterpartyId              string            `json:"ultimateCounterpartyId,omitempty"`
+	UltimateCounterpartyName            string            `json:"ultimateCounterpartyName,omitempty"`
+	UnstructuredRemittanceInformation   string            `json:"unstructuredRemittanceInformation,omitempty"`
+	VerificationResult                  string            `json:"verificationResult,omitempty"`
+	VerificationType                    TVerificationType `json:"verificationType,omitempty"`
 }
 
-type Tenant struct {
+type Tp_Tenant struct {
 	Name     string `json:"name,omitempty"`
 	TenantId string `json:"tenantid,omitempty"`
 }
 
-type GoodEntity struct {
+type Tp_Entity struct {
+	Id            string `json:"id,omitempty"`
 	Name          string `json:"name,omitempty"`
 	EntityId      string `json:"entityid,omitempty"`
 	TenantId      string `json:"tenantid,omitempty"`
 	AccountNumber string `json:"accountnumber,omitempty"`
 }
 
-type BadEntity struct {
-	Name          string `json:"name,omitempty"`
-	EntityId      string `json:"entityid,omitempty"`
-	TenantId      string `json:"tenantid,omitempty"`
-	AccountNumber string `json:"accountnumber,omitempty"`
-}
-
-type GoodPayer struct {
+type Tp_Payer struct {
 	Name          string `json:"name,omitempty"`
 	TenantId      string `json:"tenantid,omitempty"`
 	AccountNumber string `json:"accountnumber,omitempty"`
 }
 
-type BadPayer struct {
-	Name          string `json:"name,omitempty"`
-	TenantId      string `json:"tenantid,omitempty"`
-	AccountNumber string `json:"accountnumber,omitempty"`
+type Tp_Address struct {
+	Street   string `json:"street,omitempty"`
+	City     string `json:"city,omitempty"`
+	Province string `json:"Province,omitempty"`
+	Code     string `json:"code,omitempty"`
+}
+
+type Tp_Agent struct {
+	Name      string     `json:"name,omitempty"`
+	Id        string     `json:"id,omitempty"`
+	Address   Tp_Address `json:"address,omitempty"`
+	AccountId string     `json:"accountId,omitempty"`
 }
 
 type Tp_seed struct {
-	Tenants          []Tenant     `json:"tenants,omitempty"`
-	GoodEntities     []GoodEntity `json:"goodentities,omitempty"`
-	BadEntities      []BadEntity  `json:"badentities,omitempty"`
-	GoodPayers       []GoodPayer  `json:"goodpayers,omitempty"`
-	BadPayers        []BadPayer   `json:"badpayers,omitempty"`
-	Direction        []string     `json:"direction,omitempty"`
-	TransactionTypes []string     `json:"transactiontypes,omitempty"`
+	Direction                []string    `json:"direction,omitempty"`
+	TransactionTypes         []string    `json:"transactiontypes,omitempty"`
+	ChargeBearers            []string    `json:"chargeBearers,omitempty"`
+	RemittanceLocationMethod []string    `json:"remittanceLocationmethod,omitempty"`
+	SettlementMethod         []string    `json:"settlementMethod,omitempty"`
+	VerificationResult       []string    `json:"verificationResult,omitempty"`
+	PaymentFrequency         []string    `json:"paymentFrequency,omitempty"`
+	Agent                    []Tp_Agent  `json:"agent,omitempty"`
+	Tenants                  []Tp_Tenant `json:"tenants,omitempty"`
+	GoodEntities             []Tp_Entity `json:"goodentities,omitempty"`
+	BadEntities              []Tp_Entity `json:"badentities,omitempty"`
+	GoodPayers               []Tp_Payer  `json:"goodpayers,omitempty"`
+	BadPayers                []Tp_Payer  `json:"badpayers,omitempty"`
 }
