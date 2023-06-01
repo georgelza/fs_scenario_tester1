@@ -205,7 +205,6 @@ func printConfig(vGeneral types.Tp_general) {
 	grpcLog.Info("****** General Parameters *****")
 	grpcLog.Info("*")
 	grpcLog.Info("* Hostname is\t\t\t", vGeneral.Hostname)
-	grpcLog.Info("* Log Level is\t\t", vGeneral.Loglevel)
 	grpcLog.Info("* Debug Level is\t\t", vGeneral.Debuglevel)
 	grpcLog.Info("* Echo JSON is\t\t", vGeneral.Echojson)
 	grpcLog.Info("*")
@@ -260,31 +259,66 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 	gofakeit.Seed(0)
 
 	nAmount := gofakeit.Price(vGeneral.MinTransactionValue, vGeneral.MaxTransactionValue)
-	t_amount := &types.TPamount{
+	t_amount := &types.TAmount{
 		BaseCurrency: "zar",
 		BaseValue:    nAmount,
 		Currency:     "zar",
 		Value:        nAmount,
 	}
 
-	cMerchant := varSeed.GoodEntities[gofakeit.Number(1, 83)].EntityId
-	cDirection := varSeed.Direction[gofakeit.Number(0, 1)]
-	toID := varSeed.Tenants[gofakeit.Number(0, 4)]    // tenants - to Bank
-	cTenant := varSeed.Tenants[gofakeit.Number(0, 4)] // tenants - From Banks
+	directionCount := len(varSeed.Direction) - 1
+	cDirection := varSeed.Direction[gofakeit.Number(0, directionCount)]
+
+	//tenantCount := len(varSeed.Tenants) - 1
+	tenantCount := 4 // tenants - From Banks
+
+	cTenant := gofakeit.Number(0, tenantCount) // tenants - to Bank
+	jTenant := varSeed.Tenants[cTenant]
+
+	cTo := gofakeit.Number(0, tenantCount)
+	jTo := varSeed.Tenants[cTo]
+
+	// Are we using good or bad data
+	var jMerchant types.TEntity
+	if vGeneral.IntroBadEntity == 0 {
+		entityCount := len(varSeed.GoodEntities) - 1
+		cMerchant := gofakeit.Number(0, entityCount)
+		jMerchant = varSeed.GoodEntities[cMerchant]
+
+	} else {
+		entityCount := len(varSeed.BadEntities) - 1
+		cMerchant := gofakeit.Number(0, entityCount)
+		jMerchant = varSeed.BadEntities[cMerchant]
+
+	}
+
+	// Are we using good or bad data
+	var jAgent types.TAgent
+	if vGeneral.IntroBadAgent == 0 {
+		agentCount := len(varSeed.GoodAgent) - 1
+		cAgent := gofakeit.Number(0, agentCount)
+		jAgent = varSeed.GoodAgent[cAgent]
+
+	} else {
+		agentCount := len(varSeed.BadAgent) - 1
+		cAgent := gofakeit.Number(0, agentCount)
+		jAgent = varSeed.BadAgent[cAgent]
+
+	}
 
 	// We ust showing 2 ways to construct a JSON document to be Marshalled, this is the first using a map/interface,
 	// followed by using a set of struct objects added together.
 	t_Payment = map[string]interface{}{
-		"accountAgentId":                 strconv.Itoa(rand.Intn(6)),
-		"accountAgentName":               "",
+		"accountAgentId":                 jAgent.Id,
+		"accountAgentName":               jAgent.Name,
 		"accountEntityId":                strconv.Itoa(rand.Intn(6)),
-		"accountId":                      cMerchant,
+		"accountId":                      jMerchant.EntityId,
 		"amount":                         t_amount,
 		"chargeBearer":                   "SLEV",
 		"counterpartyAgentId":            "",
 		"counterpartyEntityId":           strconv.Itoa(gofakeit.Number(0, 9999)),
-		"customerEntityId":               "customerEntityId_1",
 		"counterpartyId":                 strconv.Itoa(gofakeit.Number(10000, 19999)),
+		"customerEntityId":               "customerEntityId_1",
 		"creationTime":                   time.Now().Format("2006-01-02T15:04:05"),
 		"destinationCountry":             "ZAF",
 		"direction":                      cDirection,
@@ -292,7 +326,7 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 		"eventTime":                      time.Now().Format("2006-01-02T15:04:05"),
 		"eventType":                      "paymentNRT",
 		"fromFIBranchId":                 "",
-		"fromId":                         cTenant,
+		"fromId":                         jTenant.TenantId,
 		"localInstrument":                "42",
 		"msgStatus":                      "Success",
 		"msgType":                        "RCCT",
@@ -306,9 +340,9 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 		"settlementClearingSystemCode":   "RTC",
 		"settlementDate":                 time.Now().Format("2006-01-02"),
 		"settlementMethod":               "CLRG",
-		"tenantId":                       toID,
-		"toFIBranchId":                   toID,
-		"toId":                           toID,
+		"tenantId":                       jTenant.TenantId,
+		"toFIBranchId":                   jTo.TenantId,
+		"toId":                           jTo.TenantId,
 		"totalAmount":                    t_amount,
 		"transactionId":                  uuid.New().String(),
 	}
@@ -328,124 +362,232 @@ func contructPaymentRTFromFake() (t_Payment map[string]interface{}) {
 	gofakeit.Seed(0)
 
 	nAmount := gofakeit.Price(vGeneral.MinTransactionValue, vGeneral.MaxTransactionValue)
-	t_amount := &types.TPamount{
+	t_amount := &types.TAmount{
 		BaseCurrency: "zar",
 		BaseValue:    nAmount,
 		Currency:     "zar",
 		Value:        nAmount,
 	}
 
-	toID := varSeed.Tenants[gofakeit.Number(0, 4)].TenantId    // tenants - to Bank
-	cTenant := varSeed.Tenants[gofakeit.Number(0, 4)].TenantId // tenants - From Banks
+	directionCount := len(varSeed.Direction) - 1
+	cDirection := gofakeit.Number(0, directionCount)
+	direction := varSeed.Direction[cDirection]
 
-	instructedAgentId := gofakeit.Number(0, 5)
-	instructingAgentId := gofakeit.Number(0, 5)
-	intermediaryAgent1Id := gofakeit.Number(0, 5)
-	intermediaryAgent2Id := gofakeit.Number(0, 5)
-	intermediaryAgent3Id := gofakeit.Number(0, 5)
+	//tenantCount := len(varSeed.Tenants) - 1
+	tenantCount := 3
+
+	chargeBearersCount := len(varSeed.ChargeBearers) - 1
+	goodEntityCount := len(varSeed.GoodEntities) - 1
+	//	badEntityCount := len(varSeed.BadEntities) - 1
+	//	goodPayerCount := len(varSeed.GoodPayers) - 1
+	//	badPayerCount := len(varSeed.BadPayers) - 1
+
+	paymentFrequencyCount := len(varSeed.PaymentFrequency) - 1
+	remittanceLocationMethodCount := len(varSeed.RemittanceLocationMethod) - 1
+	settlementMethodCount := len(varSeed.SettlementMethod) - 1
+	transactionTypesCount := len(varSeed.TransactionTypesRt) - 1
+	verificationResultCount := len(varSeed.VerificationResult) - 1
+
+	cId := gofakeit.Number(0, tenantCount)
+	jToID := varSeed.Tenants[cId] // tenants - to Bank
+	jTenant := varSeed.Tenants[gofakeit.Number(0, tenantCount)]
+
+	nChargeBearers := gofakeit.Number(0, chargeBearersCount)
+	//cCounterPartyAgent := gofakeit.Number(0, agentsCount) // Agents
+	nCounterParty := gofakeit.Number(0, goodEntityCount) // Agents
+	nPaymentFrequency := gofakeit.Number(0, paymentFrequencyCount)
+	nRemittanceLocationMethod := gofakeit.Number(0, remittanceLocationMethodCount)
+	nSettlementMethod := gofakeit.Number(0, settlementMethodCount)
+	nTransactionTypesRt := gofakeit.Number(3, transactionTypesCount) // 3 onwards is RT types
+	nVerificationResult := gofakeit.Number(0, verificationResultCount)
+
+	chargeBearers := varSeed.ChargeBearers[nChargeBearers]
+	paymentFrequency := varSeed.PaymentFrequency[nPaymentFrequency]
+	xtransactionTypes := varSeed.TransactionTypesRt[nTransactionTypesRt]
+	xverificationResult := varSeed.VerificationResult[nVerificationResult]
+
+	// Are we using good or bad data
+	var jAgent types.TAgent
+	var jCounterPartyAgent types.TAgent
+	var jInstructedAgent types.TAgent
+	var jInstructingAgent types.TAgent
+	var jIntermediaryAgent1Id types.TAgent
+	var jIntermediaryAgent2Id types.TAgent
+	var jIntermediaryAgent3Id types.TAgent
+	var jPayer types.TPayer
+
+	agentCount := len(varSeed.GoodAgent) - 1
+
+	cAgent := gofakeit.Number(0, agentCount)
+	jAgent = varSeed.GoodAgent[cAgent]
+
+	cCounterPartyAgent := gofakeit.Number(0, agentCount)
+	jCounterPartyAgent = varSeed.GoodAgent[cCounterPartyAgent]
+
+	cInstructedAgent := gofakeit.Number(0, agentCount)
+	jInstructedAgent = varSeed.GoodAgent[cInstructedAgent]
+
+	cInstructingAgent := gofakeit.Number(0, agentCount)
+	jInstructingAgent = varSeed.GoodAgent[cInstructingAgent]
+
+	cIntermediaryAgent1Id := gofakeit.Number(0, agentCount)
+	jIntermediaryAgent1Id = varSeed.GoodAgent[cIntermediaryAgent1Id]
+
+	cIntermediaryAgent2Id := gofakeit.Number(0, agentCount)
+	jIntermediaryAgent2Id = varSeed.GoodAgent[cIntermediaryAgent2Id]
+
+	cIntermediaryAgent3Id := gofakeit.Number(0, agentCount)
+	jIntermediaryAgent3Id = varSeed.GoodAgent[cIntermediaryAgent3Id]
+
+	payerCount := len(varSeed.GoodPayers) - 1
+	cPayer := gofakeit.Number(0, payerCount)
+	jPayer = varSeed.GoodPayers[cPayer]
 
 	// We ust showing 2 ways to construct a JSON document to be Marshalled, this is the first using a map/interface,
 	// followed by using a set of struct objects added together.
 	t_Payment = map[string]interface{}{
-		"accountAddress":      gofakeit.Address(),
-		"accountAgentAddress": gofakeit.Address(),
-		"accountAgentId":      uuid.New().String(),
-		"accountAgentName":    "",
-		"accountBalanceAfter": "",
-		"accountEntityId":     "",
+		"accountAgentId":   jAgent.Id,
+		"accountAgentName": jAgent.Name,
+		"accountAgentAddress": map[string]interface{}{
+			"addressLine1":       "accountAgentAddress_addressLine1_1",
+			"addressLine2":       "accountAgentAddress_addressLine2_1",
+			"addressLine3":       "accountAgentAddress_addressLine3_1",
+			"addressType":        "accountAgentAddress_addressType_1",
+			"country":            "acc",
+			"countrySubDivision": "accountAgentAddress_countrySubDivision_1",
+			"postalCode":         "accountAgentAddress_postalCode_1",
+			"townName":           "accountAgentAddress_townName_1",
+		},
 		"accountId":           uuid.New().String(),
-		"accountName":         "",
-		"amount":              t_amount,
-		"cardEntityId":        strconv.Itoa(gofakeit.CreditCardNumber()) + "CarSupplier",
-		"cardId":              strconv.Itoa(gofakeit.CreditCardNumber()),
-		"channel":             "",
-		"chargeBearer":        varSeed.ChargeBearers[gofakeit.Number(0, 3)],
+		"accountBalanceAfter": t_amount,
+		//	"accountEntityId":     "",
+		"accountAddress": map[string]interface{}{
+			"addressLine1": "accountAddress_addressLine1_1",
+			"addressLine2": "accountAddress_addressLine2_1",
+			"postalCode":   "accountAddress_postalCode_1",
+			"townName":     "accountAddress_townName_1",
+			"country":      "ZAF",
+		},
+		"accountName": map[string]interface{}{
+			"fullName":   jPayer.Name.FullName,
+			"namePrefix": jPayer.Name.NamePrefix,
+			"surname":    jPayer.Name.Surname,
+		},
+		"amount":       t_amount,
+		"cardEntityId": strconv.Itoa(gofakeit.CreditCardNumber()) + "CarSupplier",
+		"cardId":       strconv.Itoa(gofakeit.CreditCardNumber()),
+		"channel":      "",
+		"chargeBearer": chargeBearers,
 		"counterpartyAddress": map[string]interface{}{
-			"POBox": "1244",
-			"Code":  "2000",
+			"addressLine1": "counterpartyAddress_addressLine1_1",
+			"addressLine2": "counterpartyAddress_addressLine2_1",
+			"addressLine3": "counterpartyAddress_addressLine3_1",
+			"country":      "ZAF",
+			"postalCode":   "e1234",
 		},
-		"counterpartyAgentAddress":       gofakeit.Address(),
-		"counterpartyAgentId":            "",
-		"counterpartyAgentName":          "",
-		"counterpartyEntityId":           varSeed.GoodEntities[gofakeit.Number(1, 83)].EntityId,
-		"counterpartyId":                 varSeed.GoodEntities[gofakeit.Number(1, 83)].Id,
-		"counterpartyName":               varSeed.GoodEntities[gofakeit.Number(1, 83)].Name,
-		"creationDate":                   time.Now().Format("2006-01-02T15:04:05"),
-		"customerEntityId":               "customerEntityId_1",
-		"customerId":                     uuid.New().String(),
-		"decorationId":                   "",
-		"destinationCountry":             "ZAF",
-		"device":                         "",
-		"deviceEntityId":                 "",
-		"deviceId":                       "IMEACode",
-		"direction":                      varSeed.Direction[gofakeit.Number(0, 1)],
-		"eventId":                        uuid.New().String(),
-		"eventTime":                      time.Now().Format("2006-01-02T15:04:05"),
-		"eventType":                      "paymentRT",
-		"finalPaymentDate":               time.Now().Format("2006-01-02"),
-		"fromFIBranchId":                 "",
-		"fromId":                         "",
-		"instructedAgentId":              varSeed.Agent[instructedAgentId].Id,
-		"instructedAgentName":            varSeed.Agent[instructedAgentId].Name,
-		"instructedAgentAddress":         varSeed.Agent[instructedAgentId].Address,
-		"instructingAgentId":             varSeed.Agent[instructingAgentId].Id,
-		"instructingAgentName":           varSeed.Agent[instructingAgentId].Name,
-		"instructingAgentAddress":        varSeed.Agent[instructingAgentId].Address,
-		"intermediaryAgent1Id":           varSeed.Agent[intermediaryAgent1Id].Id,
-		"intermediaryAgent1Name":         varSeed.Agent[intermediaryAgent1Id].Name,
-		"intermediaryAgent1Address":      varSeed.Agent[intermediaryAgent1Id].Address,
-		"intermediaryAgent1AccountId":    varSeed.Agent[intermediaryAgent1Id].AccountId,
-		"intermediaryAgent2Id":           varSeed.Agent[intermediaryAgent2Id].Id,
-		"intermediaryAgent2Name":         varSeed.Agent[intermediaryAgent2Id].Name,
-		"intermediaryAgent2Address":      varSeed.Agent[intermediaryAgent2Id].Address,
-		"intermediaryAgent2AccountId":    varSeed.Agent[intermediaryAgent2Id].AccountId,
-		"intermediaryAgent3Id":           varSeed.Agent[intermediaryAgent3Id].Id,
-		"intermediaryAgent3Name":         varSeed.Agent[intermediaryAgent3Id].Name,
-		"intermediaryAgent3Address":      varSeed.Agent[intermediaryAgent3Id].Address,
-		"intermediaryAgent3AccountId":    varSeed.Agent[intermediaryAgent3Id].AccountId,
-		"localInstrument":                "",
-		"msgStatus":                      "New", //
-		"msgStatusReason":                "New Payee",
-		"msgType":                        "2100",
-		"numberOfTransactions":           1,
-		"paymentClearingSystemReference": "",
-		"paymentFrequency":               varSeed.PaymentFrequency[gofakeit.Number(0, 8)],
-		"paymentMethod":                  "",
-		"paymentReference":               "",
-		"remittanceId":                   "",
-		"remittanceLocationElectronicAddress": map[string]interface{}{
-			"POBox": "1244",
-			"Code":  "2001",
+		"counterpartyAgentId":      jCounterPartyAgent.Id,
+		"counterpartyAgentName":    jCounterPartyAgent.Name,
+		"counterpartyAgentAddress": jCounterPartyAgent.Address,
+		"counterpartyId":           varSeed.GoodEntities[nCounterParty].Id,
+		"counterpartyName":         map[string]interface{}{},
+		"counterpartyEntityId":     varSeed.GoodEntities[nCounterParty].EntityId,
+		"creationDate":             time.Now().Format("2006-01-02T15:04:05"),
+		"customerEntityId":         jPayer.AccountNumber,
+		"customerId":               jPayer.Id,
+		"decorationId":             varSeed.Decoration,
+		"destinationCountry":       "ZAF",
+		"device": map[string]interface{}{
+			"anonymizerInUseFlag": "device_anonymizerInUseFlag_1",
+			"deviceFingerprint":   "device_deviceFingerprint_1",
+			"deviceIMEI":          "device_deviceIMEI_1",
+			"sessionLatitude":     5391.835331574868,
+			"sessionLongitude":    6200.391276149532,
 		},
-		"remittanceLocationMethod":     varSeed.RemittanceLocationMethod[gofakeit.Number(0, 5)],
-		"requestExecutionDate":         time.Now().Format("2006-01-02"),
-		"schemaVersion":                1,
-		"serviceLevelCode":             "",
-		"settlementClearingSystemCode": "",
-		"settlementDate":               time.Now().Format("2006-01-02"),
-		"settlementMethod":             varSeed.SettlementMethod[gofakeit.Number(0, 3)],
-		"tenantId":                     cTenant,
-		"toFIBranchId":                 toID,
-		"toId":                         toID,
-		"totalAmount":                  t_amount,
-		"transactionId":                uuid.New().String(),
-		"transactionType":              varSeed.TransactionTypes[gofakeit.Number(4, 6)],
+		"deviceEntityId":                      "",
+		"deviceId":                            "IMEACode",
+		"direction":                           direction,
+		"eventId":                             uuid.New().String(),
+		"eventTime":                           time.Now().Format("2006-01-02T15:04:05"),
+		"eventType":                           "paymentRT",
+		"finalPaymentDate":                    time.Now().Format("2006-01-02"),
+		"firstPaymentDate":                    time.Now().Format("2006-01-02"),
+		"fromFIBranchId":                      "",
+		"fromId":                              jTenant.TenantId,
+		"instructedAgentId":                   jInstructedAgent.Id,
+		"instructedAgentName":                 jInstructedAgent.Name,
+		"instructedAgentAddress":              jInstructedAgent.Address,
+		"instructingAgentId":                  jInstructingAgent.Id,
+		"instructingAgentName":                jInstructingAgent.Name,
+		"instructingAgentAddress":             jInstructingAgent.Address,
+		"intermediaryAgent1Id":                jIntermediaryAgent1Id.Id,
+		"intermediaryAgent1Name":              jIntermediaryAgent1Id.Name,
+		"intermediaryAgent1AccountId":         jIntermediaryAgent1Id.AccountId,
+		"intermediaryAgent1Address":           jIntermediaryAgent1Id.Address,
+		"intermediaryAgent2Id":                jIntermediaryAgent2Id.Id,
+		"intermediaryAgent2Name":              jIntermediaryAgent2Id.Name,
+		"intermediaryAgent2AccountId":         jIntermediaryAgent2Id.AccountId,
+		"intermediaryAgent2Address":           jIntermediaryAgent2Id.Address,
+		"intermediaryAgent3Id":                jIntermediaryAgent3Id.Id,
+		"intermediaryAgent3Name":              jIntermediaryAgent3Id.Name,
+		"intermediaryAgent3AccountId":         jIntermediaryAgent3Id.AccountId,
+		"intermediaryAgent3Address":           jIntermediaryAgent3Id.Address,
+		"localInstrument":                     "",
+		"msgStatus":                           "New",
+		"msgStatusReason":                     "New Payee",
+		"msgType":                             "2100",
+		"numberOfTransactions":                1,
+		"paymentClearingSystemReference":      "",
+		"paymentFrequency":                    paymentFrequency,
+		"paymentMethod":                       "",
+		"paymentReference":                    "",
+		"remittanceId":                        "",
+		"remittanceLocationElectronicAddress": "remittanceLocationElectronicAddress_1",
+		"remittanceLocationMethod":            varSeed.RemittanceLocationMethod[nRemittanceLocationMethod],
+		"requestExecutionDate":                time.Now().Format("2006-01-02"),
+		"schemaVersion":                       1,
+		"serviceLevelCode":                    "",
+		"settlementClearingSystemCode":        "",
+		"settlementDate":                      time.Now().Format("2006-01-02"),
+		"settlementMethod":                    varSeed.SettlementMethod[nSettlementMethod],
+		"tenantId":                            jTenant.TenantId,
+		"toFIBranchId":                        jToID.TenantId,
+		"toId":                                jToID.TenantId,
+		"totalAmount":                         t_amount,
+		"transactionId":                       uuid.New().String(),
+		"transactionType":                     xtransactionTypes,
 		"ultimateAccountAddress": map[string]interface{}{
-			"POBox": "1244",
-			"Code":  "2011",
+			"addressLine1": "ultimateCounterpartyAddress_addressLine1_1",
+			"addressLine2": "ultimateCounterpartyAddress_addressLine2_1",
+			"addressLine3": "ultimateCounterpartyAddress_addressLine3_1",
+			"postalCode":   "2342342",
+			"country":      "ZAF",
 		},
-		"ultimateAccountId":   "",
-		"ultimateAccountName": "",
+		"ultimateAccountId": "",
+		"ultimateAccountName": map[string]interface{}{
+			"fullName":  "ultimateAccountName_fullName_1",
+			"givenName": "ultimateAccountName_givenName_1",
+			"surname":   "ultimateAccountName_surname_1",
+		},
 		"ultimateCounterpartyAddress": map[string]interface{}{
-			"POBox": "1244",
-			"Code":  "1221",
+			"addressLine1":       "ultimateCounterpartyAddress_addressLine1_1",
+			"addressLine2":       "ultimateCounterpartyAddress_addressLine2_1",
+			"countrySubDivision": "ultimateCounterpartyAddress_countrySubDivision_1",
+			"latitude":           8534.86390567603,
+			"longitude":          6842.924811568308,
+			"postalCode":         "ultimateCounterpartyAddress_postalCode_1",
+			"townName":           "ultimateCounterpartyAddress_townName_1",
+			"country":            "ZAF",
 		},
-		"ultimateCounterpartyId":            "",
-		"ultimateCounterpartyName":          "",
+		"ultimateCounterpartyId": "",
+		"ultimateCounterpartyName": map[string]interface{}{
+			"fullName":  "ultimateCounterpartyName_fullName_1",
+			"givenName": "ultimateCounterpartyName_givenName_1",
+			"surname":   "ultimateCounterpartyName_surname_1",
+		},
 		"unstructuredRemittanceInformation": "",
-		"verificationResult":                varSeed.VerificationResult[gofakeit.Number(0, 8)],
+		"verificationResult":                xverificationResult,
 		"verificationType": map[string]interface{}{
-			"Type": "1244",
+			"aa": "verificationType_aa_1",
 		},
 	}
 
@@ -521,7 +663,7 @@ func fetchJSONRecords(input_path string) (records map[int]string, count int) {
 	}
 
 	for _, file := range files {
-		if file.IsDir() == false {
+		if !file.IsDir() {
 			m[count] = file.Name()
 			count++
 
@@ -597,7 +739,7 @@ func runLoader() {
 			filename := vGeneral.Input_path + "/" + returnedRecs[count]
 
 			contents := ReadJSONFile(filename)
-			if isJSON(contents) != true {
+			if !isJSON(contents) {
 				weFailed = true
 				grpcLog.Infoln(filename, "=> FAIL")
 
@@ -607,7 +749,7 @@ func runLoader() {
 			}
 
 		}
-		if weFailed == true {
+		if weFailed {
 			os.Exit(1)
 		}
 		grpcLog.Infoln("")
@@ -712,7 +854,7 @@ func runLoader() {
 					}
 
 				} else if response.Status == "204 No Content" {
-					// it's a paymentNRT
+					// it's a paymentNRT - SUCCESS
 
 					grpcLog.Infoln("response Body         : paymentNRT")
 					tBody = map[string]interface{}{
@@ -725,12 +867,14 @@ func runLoader() {
 
 				} else {
 					// oh sh$t
+					grpcLog.Infoln("response Body        :", string(body))
 
-					grpcLog.Infoln("response Body         : FAILED POST")
+					grpcLog.Infoln("response Result         : FAILED POST")
 					tBody = map[string]interface{}{
 						"eventId":         t_Payment["eventId"],
 						"eventType":       t_Payment["eventType"],
-						"responseBody":    "FAILED POST",
+						"responseResult":  "FAILED POST",
+						"responseBody":    string(body),
 						"responseStatus":  response.Status,
 						"responseHeaders": response.Header,
 						"processTime":     time.Now().UTC(),
