@@ -16,30 +16,30 @@
   "postalCode": "accountAgentAddress_postalCode_1",
   "townName": "accountAgentAddress_townName_1"
  },
- "accountAgentId": "50212",
- "accountAgentName": "Agent2",
+ "accountAgentId": "50884",
+ "accountAgentName": "Agent8",
  "accountBalanceAfter": {
   "baseCurrency": "zar",
-  "baseValue": 523.13,
+  "baseValue": 236.8,
   "currency": "zar",
-  "value": 523.13
+  "value": 236.8
  },
- "accountId": "77ffa3c1-2aff-423b-bea8-9f35503570de",
+ "accountId": "4b5d4446-365a-44e9-a758-2208e336acad",
  "accountName": {
-  "fullName": "Ciljee",
-  "namePrefix": "Mr",
-  "surname": "Klopper"
+  "fullName": "Mari",
+  "namePrefix": "Mrs",
+  "surname": "Engelbrecght"
  },
  "amount": {
   "baseCurrency": "zar",
-  "baseValue": 523.13,
+  "baseValue": 236.8,
   "currency": "zar",
-  "value": 523.13
+  "value": 236.8
  },
- "cardEntityId": "4683412700221430CarSupplier",
- "cardId": "2720999804997981",
+ "cardEntityId": "2720992183692761CarSupplier",
+ "cardId": "375719779436169",
  "channel": "",
- "chargeBearer": "DEBT",
+ "chargeBearer": "SLEV",
  "counterpartyAddress": {
   "addressLine1": "counterpartyAddress_addressLine1_1",
   "addressLine2": "counterpartyAddress_addressLine2_1",
@@ -48,20 +48,20 @@
   "postalCode": "e1234"
  },
  "counterpartyAgentAddress": {
-  "addressLine1": "Long Street",
+  "addressLine1": "Melk Street",
   "country": "ZAF",
-  "countrySubDivision": "Western Cape",
-  "postalCode": "1100",
-  "townName": "Cape Town"
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
  },
- "counterpartyAgentId": "50723",
- "counterpartyAgentName": "Agent3",
- "counterpartyEntityId": "73",
- "counterpartyId": "73",
+ "counterpartyAgentId": "50884",
+ "counterpartyAgentName": "Agent8",
+ "counterpartyEntityId": "74",
+ "counterpartyId": "74",
  "counterpartyName": {},
- "creationDate": "2023-06-01T09:26:19",
+ "creationDate": "2023-06-02T13:03:36",
  "customerEntityId": "23434545345",
- "customerId": "401",
+ "customerId": "411",
  "decorationId": [
   "decorationId_0"
  ],
@@ -75,52 +75,52 @@
  },
  "deviceEntityId": "",
  "deviceId": "IMEACode",
- "direction": "outbound",
- "eventId": "a20cd36e-c09a-4028-a89c-10745a7e7296",
- "eventTime": "2023-06-01T09:26:19",
+ "direction": "inbound",
+ "eventId": "868827f1-ec44-4940-8308-4763bc4a5721",
+ "eventTime": "2023-06-02T13:03:36",
  "eventType": "paymentRT",
- "finalPaymentDate": "2023-06-01",
- "firstPaymentDate": "2023-06-01",
+ "finalPaymentDate": "2023-06-02",
+ "firstPaymentDate": "2023-06-02",
  "fromFIBranchId": "",
- "fromId": "fnb",
+ "fromId": "absa",
  "instructedAgentAddress": {
-  "addressLine1": "Long Street",
+  "addressLine1": "Da Gama Street",
   "country": "ZAF",
-  "countrySubDivision": "Western Cape",
-  "postalCode": "1100",
-  "townName": "Cape Town"
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
  },
- "instructedAgentId": "50723",
- "instructedAgentName": "Agent3",
+ "instructedAgentId": "50874",
+ "instructedAgentName": "Agent4",
  "instructingAgentAddress": {
-  "addressLine1": "Long Street",
+  "addressLine1": "Melk Street",
   "country": "ZAF",
-  "countrySubDivision": "Western Cape",
-  "postalCode": "1100",
-  "townName": "Cape Town"
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
  },
- "instructingAgentId": "50723",
- "instructingAgentName": "Agent3",
- "intermediaryAgent1AccountId": "9204",
+ "instructingAgentId": "50884",
+ "instructingAgentName": "Agent8",
+ "intermediaryAgent1AccountId": "301",
  "intermediaryAgent1Address": {
-  "addressLine1": "Kruis Street",
+  "addressLine1": "Church Ave",
   "country": "ZAF",
-  "countrySubDivision": "Eastern Cape",
-  "postalCode": "1663",
-  "townName": "JeffreysBay"
+  "countrySubDivision": "Gauteng",
+  "postalCode": "1200",
+  "townName": "Pretoria"
  },
- "intermediaryAgent1Id": "50883",
- "intermediaryAgent1Name": "Agent7",
- "intermediaryAgent2AccountId": "9204",
+ "intermediaryAgent1Id": "50212",
+ "intermediaryAgent1Name": "Agent2",
+ "intermediaryAgent2AccountId": "102",
  "intermediaryAgent2Address": {
-  "addressLine1": "Potter Street",
+  "addressLine1": "Pretorius Ave",
   "country": "ZAF",
-  "countrySubDivision": "Eastern Cape",
-  "postalCode": "1663",
-  "townName": "JeffreysBay"
+  "countrySubDivision": "Gauteng",
+  "postalCode": "2000",
+  "townName": "Pretoria"
  },
- "intermediaryAgent2Id": "50881",
- "intermediaryAgent2Name": "Agent5",
+ "intermediaryAgent2Id": "50221",
+ "intermediaryAgent2Name": "Agent1",
  "intermediaryAgent3AccountId": "9204",
  "intermediaryAgent3Address": {
   "addressLine1": "Kruis Street",
@@ -137,28 +137,28 @@
  "msgType": "2100",
  "numberOfTransactions": 1,
  "paymentClearingSystemReference": "",
- "paymentFrequency": "WEEK",
+ "paymentFrequency": "FRTN",
  "paymentMethod": "",
  "paymentReference": "",
  "remittanceId": "",
  "remittanceLocationElectronicAddress": "remittanceLocationElectronicAddress_1",
- "remittanceLocationMethod": "EDIC",
- "requestExecutionDate": "2023-06-01",
+ "remittanceLocationMethod": "FAXI",
+ "requestExecutionDate": "2023-06-02",
  "schemaVersion": 1,
  "serviceLevelCode": "",
  "settlementClearingSystemCode": "",
- "settlementDate": "2023-06-01",
- "settlementMethod": "INDA",
- "tenantId": "fnb",
- "toFIBranchId": "16",
- "toId": "16",
+ "settlementDate": "2023-06-02",
+ "settlementMethod": "CLRG",
+ "tenantId": "absa",
+ "toFIBranchId": "fnb",
+ "toId": "fnb",
  "totalAmount": {
   "baseCurrency": "zar",
-  "baseValue": 523.13,
+  "baseValue": 236.8,
   "currency": "zar",
-  "value": 523.13
+  "value": 236.8
  },
- "transactionId": "6e029230-abe0-47b3-9481-ddf0161cf9fc",
+ "transactionId": "0b9310a1-c2a7-40ef-9cb1-4cf789f6496a",
  "transactionType": "RequestToPay",
  "ultimateAccountAddress": {
   "addressLine1": "ultimateCounterpartyAddress_addressLine1_1",
@@ -190,7 +190,7 @@
   "surname": "ultimateCounterpartyName_surname_1"
  },
  "unstructuredRemittanceInformation": "",
- "verificationResult": "OTHN",
+ "verificationResult": "NOVF",
  "verificationType": {
   "aa": "verificationType_aa_1"
  }

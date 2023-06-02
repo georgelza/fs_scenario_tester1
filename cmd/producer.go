@@ -59,7 +59,6 @@ import (
 	glog "google.golang.org/grpc/grpclog"
 
 	// My Types/Structs/functions
-
 	"cmd/types"
 
 	"crypto/tls"
@@ -69,7 +68,7 @@ import (
 var (
 	grpcLog  glog.LoggerV2
 	validate = validator.New()
-	varSeed  types.Tp_seed
+	varSeed  types.TPSeed
 	vGeneral types.Tp_general
 )
 
@@ -83,6 +82,7 @@ func init() {
 	grpcLog.Infoln("#   Project   : TFM 2.0")
 	grpcLog.Infoln("#")
 	grpcLog.Infoln("#   Comment   : FeatureSpace Scenario Publisher / Fake Data Generator")
+	grpcLog.Infoln("#             : To be Event/Alert publisher")
 	grpcLog.Infoln("#")
 	grpcLog.Infoln("#   By        : George Leonard (georgelza@gmail.com)")
 	grpcLog.Infoln("#")
@@ -104,31 +104,21 @@ func loadConfig(params ...string) types.Tp_general {
 
 	path, err := os.Getwd()
 	if err != nil {
-		grpcLog.Errorln("Problem retrieving current path: %s", err)
-
-	} else {
-		grpcLog.Infoln("*")
-		grpcLog.Infoln("* Config:")
-		grpcLog.Infoln("* Current path:", path)
+		grpcLog.Fatalln("Problem retrieving current path: %s", err)
 
 	}
 
 	//	fileName := fmt.Sprintf("%s/%s_app.json", path, env)
 	fileName := fmt.Sprintf("%s/%s_app.json", path, env)
-
-	grpcLog.Infoln("* Config File :", fileName)
-	grpcLog.Infoln("*")
-
 	err = gonfig.GetConf(fileName, &vGeneral)
 	if err != nil {
 		grpcLog.Fatalln("Error Reading Config File: ", err)
-		os.Exit(1)
 
 	} else {
 
 		vHostname, err := os.Hostname()
 		if err != nil {
-			grpcLog.Errorln("Can't retrieve hostname %s", err)
+			grpcLog.Fatalln("Can't retrieve hostname %s", err)
 
 		}
 		vGeneral.Hostname = vHostname
@@ -157,43 +147,51 @@ func loadConfig(params ...string) types.Tp_general {
 		printConfig(vGeneral)
 	}
 
+	if vGeneral.Debuglevel > 0 {
+		grpcLog.Infoln("*")
+		grpcLog.Infoln("* Config:")
+		grpcLog.Infoln("* Current path:", path)
+		grpcLog.Infoln("* Config File :", fileName)
+		grpcLog.Infoln("*")
+
+	}
+
 	return vGeneral
 }
 
-func loadSeed(file string) types.Tp_seed {
+func loadSeed(file string) types.TPSeed {
 
-	var vSeed types.Tp_seed
+	var vSeed types.TPSeed
 
 	path, err := os.Getwd()
 	if err != nil {
-		grpcLog.Errorln("Problem retrieving current path: %s", err)
-
-	} else {
-		grpcLog.Infoln("*")
-		grpcLog.Infoln("* Seed :")
-		grpcLog.Infoln("* Current path:", path)
+		grpcLog.Fatalln("Problem retrieving current path: %s", err)
 
 	}
 
 	fileName := fmt.Sprintf("%s/%s", path, file)
-
-	grpcLog.Infoln("* Seed File :", fileName)
-	grpcLog.Infoln("*")
-
 	err = gonfig.GetConf(fileName, &vSeed)
 	if err != nil {
 		grpcLog.Fatalln("Error Reading Seed File: ", err)
-		os.Exit(1)
+
 	}
 
 	v, err := json.Marshal(vSeed)
 	if err != nil {
-		grpcLog.Errorln("Marchalling error: ", err)
-		os.Exit(1)
+		grpcLog.Fatalln("Marchalling error: ", err)
 	}
 
 	if vGeneral.EchoSeed == 1 {
 		prettyJSON(string(v))
+
+	}
+
+	if vGeneral.Debuglevel > 0 {
+		grpcLog.Infoln("*")
+		grpcLog.Infoln("* Seed :")
+		grpcLog.Infoln("* Current path:", path)
+		grpcLog.Infoln("* Seed File :", fileName)
+		grpcLog.Infoln("*")
 
 	}
 
@@ -258,6 +256,18 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 	gofakeit.Seed(time.Now().UnixNano())
 	gofakeit.Seed(0)
 
+	//tenantCount := len(varSeed.Tenants) - 1
+	tenantCount := 4 // tenants - From Banks
+
+	directionCount := len(varSeed.Direction) - 1
+	cDirection := varSeed.Direction[gofakeit.Number(0, directionCount)]
+
+	cTenant := gofakeit.Number(0, tenantCount) // tenants - to Bank
+	jTenant := varSeed.Tenants[cTenant]
+
+	cTo := gofakeit.Number(0, tenantCount)
+	jTo := varSeed.Tenants[cTo]
+
 	nAmount := gofakeit.Price(vGeneral.MinTransactionValue, vGeneral.MaxTransactionValue)
 	t_amount := &types.TAmount{
 		BaseCurrency: "zar",
@@ -265,18 +275,6 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 		Currency:     "zar",
 		Value:        nAmount,
 	}
-
-	directionCount := len(varSeed.Direction) - 1
-	cDirection := varSeed.Direction[gofakeit.Number(0, directionCount)]
-
-	//tenantCount := len(varSeed.Tenants) - 1
-	tenantCount := 4 // tenants - From Banks
-
-	cTenant := gofakeit.Number(0, tenantCount) // tenants - to Bank
-	jTenant := varSeed.Tenants[cTenant]
-
-	cTo := gofakeit.Number(0, tenantCount)
-	jTo := varSeed.Tenants[cTo]
 
 	// Are we using good or bad data
 	var jMerchant types.TEntity
@@ -599,7 +597,8 @@ func ReadJSONFile(varRec string) []byte {
 	// Let's first read the `config.json` file
 	content, err := ioutil.ReadFile(varRec)
 	if err != nil {
-		grpcLog.Fatal("Error when opening file: ", err)
+		grpcLog.Fatalln("Error when opening file: ", err)
+
 	}
 	return content
 }
@@ -636,16 +635,25 @@ func contructPaymentFromJSON(varRec string) (t_Payment map[string]interface{}) {
 // Query database and get the record set to work with - For now we're mimicing a fake EFT query/fetch
 func fetchRecords() {
 
-	grpcLog.Info("**** Quering Backend database ****")
+	if vGeneral.Debuglevel > 1 {
+		grpcLog.Info("**** Quering Backend database ****")
+
+	}
 
 	// Execute a large sql #1 execute
 	rand.Seed(time.Now().UnixNano())
 	n := rand.Intn(10000) // if vGeneral.sleep = 10000, 10 second
-	grpcLog.Info("EFT SQL Sleeping Millisecond - Simulating long database fetch...", n)
+	if vGeneral.Debuglevel > 1 {
+		grpcLog.Info("EFT SQL Sleeping Millisecond - Simulating long database fetch...", n)
+
+	}
+
 	time.Sleep(time.Duration(n) * time.Millisecond)
 
-	grpcLog.Info("**** Backend dataset retrieved ****")
+	if vGeneral.Debuglevel > 1 {
+		grpcLog.Info("**** Backend dataset retrieved ****")
 
+	}
 }
 
 // Return list of files located in input_path to be repackaged as JSON payloads and posted onto the API endpoint
@@ -689,6 +697,7 @@ func runLoader() {
 	caCert, err := ioutil.ReadFile(vGeneral.Cert_file)
 	if err != nil {
 		grpcLog.Errorln("Problem reading :", vGeneral.Cert_file, " Error :", err)
+
 	}
 
 	caCertPool := x509.NewCertPool()
@@ -709,6 +718,7 @@ func runLoader() {
 	if vGeneral.Debuglevel > 0 {
 		grpcLog.Info("**** LETS GO Processing ****")
 		grpcLog.Infoln("")
+
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -728,8 +738,11 @@ func runLoader() {
 		// this will return an map of files names, each being a JSON document
 		returnedRecs, todo_count = fetchJSONRecords(vGeneral.Input_path)
 
-		grpcLog.Infoln("Checking input event files (Making sure it's valid JSON)...")
-		grpcLog.Infoln("")
+		if vGeneral.Debuglevel > 1 {
+			grpcLog.Infoln("Checking input event files (Making sure it's valid JSON)...")
+			grpcLog.Infoln("")
+
+		}
 
 		var weFailed bool = false
 		for count := 0; count < todo_count; count++ {
@@ -756,7 +769,10 @@ func runLoader() {
 
 	}
 
-	grpcLog.Infoln("Number of records to Process", todo_count) // just doing this to prefer a unused error
+	if vGeneral.Debuglevel > 1 {
+		grpcLog.Infoln("Number of records to Process", todo_count) // just doing this to prefer a unused error
+
+	}
 
 	// now we loop through the results, building a json document based on FS requirements and then post it, for this code I'm posting to
 	// Confluent Kafka topic, but it's easy to change to have it post to a API endpoint.
@@ -766,23 +782,26 @@ func runLoader() {
 
 	for count := 0; count < todo_count; count++ {
 
-		grpcLog.Infoln("")
-		grpcLog.Infoln("Record                :", count+1)
+		if vGeneral.Debuglevel > 1 {
+			grpcLog.Infoln("")
+			grpcLog.Infoln("Record                :", count+1)
+
+		}
 
 		// We're going to time every record and push that to prometheus
 		txnStart := time.Now()
 
-		var t_Payment map[string]interface{}
+		var t_Payload map[string]interface{}
 
 		// Build the entire JSON Payload document, either a fake record or from a input/scenario JSON file
 		if vGeneral.Json_from_file == 0 { // Build Fake Record
 
 			if vGeneral.Eventtype == "paymentNRT" {
 				// They are just to different to have kept in one function, so split them into 2 seperate specific use case functions.
-				t_Payment = contructPaymentNRTFromFake()
+				t_Payload = contructPaymentNRTFromFake()
 
-			} else {
-				t_Payment = contructPaymentRTFromFake()
+			} else if vGeneral.Eventtype == "paymentRT" {
+				t_Payload = contructPaymentRTFromFake()
 
 			}
 		} else {
@@ -791,16 +810,19 @@ func runLoader() {
 			filename := vGeneral.Input_path + "/" + returnedRecs[count]
 			if vGeneral.Debuglevel > 2 {
 				grpcLog.Infoln("Source Event          :", filename)
+
 			}
-			t_Payment = contructPaymentFromJSON(filename)
+			t_Payload = contructPaymentFromJSON(filename)
 
 			// we update/refresh the eventID, to ensure we don't get duplicate id's at POST time
-			t_Payment["eventId"] = uuid.New().String()
-			grpcLog.Infoln("eventId assigned      :", t_Payment["eventId"])
+			t_Payload["eventId"] = uuid.New().String()
+			if vGeneral.Debuglevel > 1 {
+				grpcLog.Infoln("eventId assigned      :", t_Payload["eventId"])
 
+			}
 		}
 
-		valueBytes, err := json.Marshal(t_Payment)
+		valueBytes, err := json.Marshal(t_Payload)
 		if err != nil {
 			grpcLog.Errorln("Marchalling error: ", err)
 
@@ -818,6 +840,7 @@ func runLoader() {
 
 			// Demo environment only available:
 			// 07:00 to 19:00
+			apiStart := time.Now()
 
 			// https://golangtutorial.dev/tips/http-post-json-go/
 			request, err := http.NewRequest("POST", vGeneral.Httpposturl, bytes.NewBuffer(valueBytes))
@@ -835,13 +858,21 @@ func runLoader() {
 			}
 			defer response.Body.Close()
 
+			// Did we call the API, how long did it take, do this here before we write to a file that will impact this time
+			if vGeneral.Debuglevel > 0 {
+				grpcLog.Infoln("API Call Time         :", time.Since(apiStart).Seconds(), "Sec")
+
+			}
+
 			body, _ = ioutil.ReadAll(response.Body)
 			if vGeneral.Debuglevel > 2 {
 				grpcLog.Infoln("response Payload      :")
 				grpcLog.Infoln("response Status       :", response.Status)
 				grpcLog.Infoln("response Headers      :", response.Header)
+
 				if response.Status == "200 OK" {
-					// if 200 then we know it's a paymentRT
+					// it's a paymentNT - SUCCESS
+					// it's a paymentRT and we have a very big body
 
 					json.Unmarshal(body, &tBody)
 					if vGeneral.Echojson == 1 {
@@ -855,24 +886,26 @@ func runLoader() {
 
 				} else if response.Status == "204 No Content" {
 					// it's a paymentNRT - SUCCESS
+					// lets build a body of the header and some additional information
 
 					grpcLog.Infoln("response Body         : paymentNRT")
 					tBody = map[string]interface{}{
-						"eventId":         t_Payment["eventId"],
-						"eventType":       t_Payment["eventType"],
+						"eventId":         t_Payload["eventId"],
+						"eventType":       t_Payload["eventType"],
 						"responseStatus":  response.Status,
 						"responseHeaders": response.Header,
 						"processTime":     time.Now().UTC(),
 					}
 
 				} else {
-					// oh sh$t
+					// oh sh$t, its not a success so now to try and build a body to fault fix later
+
 					grpcLog.Infoln("response Body        :", string(body))
 
 					grpcLog.Infoln("response Result         : FAILED POST")
 					tBody = map[string]interface{}{
-						"eventId":         t_Payment["eventId"],
-						"eventType":       t_Payment["eventType"],
+						"eventId":         t_Payload["eventId"],
+						"eventType":       t_Payload["eventType"],
 						"responseResult":  "FAILED POST",
 						"responseBody":    string(body),
 						"responseStatus":  response.Status,
@@ -880,11 +913,15 @@ func runLoader() {
 						"processTime":     time.Now().UTC(),
 					}
 				}
+
 			}
 
 		}
 
-		if vGeneral.Json_to_file == 1 { // POST to API endpoint
+		// even if we post to FS API or not, we want isolated control if we output to the json file.
+		if vGeneral.Json_to_file == 1 {
+
+			fileStart := time.Now()
 
 			//...................................
 			// Writing struct type to a JSON file
@@ -895,15 +932,15 @@ func runLoader() {
 			// Reading
 			// https://medium.com/kanoteknologi/better-way-to-read-and-write-json-file-in-golang-9d575b7254f2
 
-			eventId := t_Payment["eventId"]
+			tagId := t_Payload["eventId"]
 
-			loc_in := fmt.Sprintf("%s/%s.json", vGeneral.Output_path, eventId)
+			loc_in := fmt.Sprintf("%s/%s.json", vGeneral.Output_path, tagId)
 			if vGeneral.Debuglevel > 0 {
 				grpcLog.Infoln("Output Event          :", loc_in)
 
 			}
 
-			fd, err := json.MarshalIndent(t_Payment, "", " ")
+			fd, err := json.MarshalIndent(t_Payload, "", " ")
 			if err != nil {
 				grpcLog.Errorln("MarshalIndent error", err)
 
@@ -915,15 +952,21 @@ func runLoader() {
 
 			}
 
+			// Did we call the API endpoint above... if yes then do these steps
 			if vGeneral.Call_fs_api == 1 { // we need to call the API to get a output/response on paymentRT events
 
-				loc_out := fmt.Sprintf("%s/%s-out.json", vGeneral.Output_path, eventId)
+				loc_out := fmt.Sprintf("%s/%s-out.json", vGeneral.Output_path, tagId)
 				if vGeneral.Debuglevel > 0 {
-
 					grpcLog.Infoln("engineResponse        :", loc_out)
+
 				}
 
 				fj, err := json.MarshalIndent(tBody, "", " ")
+				if err != nil {
+					grpcLog.Errorln("MarshalIndent error", err)
+
+				}
+
 				err = ioutil.WriteFile(loc_out, fj, 0644)
 				if err != nil {
 					grpcLog.Errorln("ioutil.WriteFile error", err)
@@ -931,11 +974,17 @@ func runLoader() {
 				}
 			}
 
+			if vGeneral.Debuglevel > 0 {
+				grpcLog.Infoln("JSON to File Time     :", time.Since(fileStart).Seconds(), "Sec")
+
+			}
 		}
-		if vGeneral.Call_fs_api == 1 {
-			grpcLog.Infoln("API Call Time         :", time.Since(txnStart).Seconds(), "Sec")
+
+		if vGeneral.Debuglevel > 0 {
+			grpcLog.Infoln("Total Time            :", time.Since(txnStart).Seconds(), "Sec")
 
 		}
+
 		//////////////////////////////////////////////////
 		// THIS IS SLEEP BETWEEN RECORD POSTS
 		//
@@ -950,7 +999,7 @@ func runLoader() {
 			rand.Seed(time.Now().UnixNano())
 			n := rand.Intn(vGeneral.Sleep) // if vGeneral.sleep = 1000, then n will be random value of 0 -> 1000  aka 0 and 1 second
 			if vGeneral.Debuglevel >= 2 {
-				grpcLog.Infof("Sleeping              : %d Milliseconds\n", n)
+				grpcLog.Infof("Going to sleep for    : %d Milliseconds\n", n)
 
 			}
 			time.Sleep(time.Duration(n) * time.Millisecond)
@@ -962,15 +1011,15 @@ func runLoader() {
 		grpcLog.Infoln("")
 		grpcLog.Infoln("**** DONE Processing ****")
 		grpcLog.Infoln("")
-	}
 
-	if vGeneral.Debuglevel >= 1 {
-		vEnd := time.Now()
-		grpcLog.Infoln("Start      : ", vStart)
-		grpcLog.Infoln("End        : ", vEnd)
-		grpcLog.Infoln("Duration   : ", vEnd.Sub(vStart))
-		grpcLog.Infoln("Records    : ", vGeneral.Testsize)
-		grpcLog.Infoln("")
+		if vGeneral.Debuglevel >= 1 {
+			vEnd := time.Now()
+			grpcLog.Infoln("Start      : ", vStart)
+			grpcLog.Infoln("End        : ", vEnd)
+			grpcLog.Infoln("Duration   : ", vEnd.Sub(vStart))
+			grpcLog.Infoln("Records    : ", vGeneral.Testsize)
+			grpcLog.Infoln("")
+		}
 	}
 
 } // runEFTLoader()

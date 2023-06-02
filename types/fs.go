@@ -288,7 +288,7 @@ type TAgent struct {
 	AccountId string   `json:"accountId,omitempty"`
 }
 
-type Tp_seed struct {
+type TPSeed struct {
 	Decoration               []string  `json:"decoration,omitempty"`
 	Direction                []string  `json:"direction,omitempty"`
 	TransactionTypesNrt      []string  `json:"transactionTypesNrt,omitempty"`

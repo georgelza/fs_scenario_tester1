@@ -1,0 +1,197 @@
+{
+ "accountAddress": {
+  "addressLine1": "accountAddress_addressLine1_1",
+  "addressLine2": "accountAddress_addressLine2_1",
+  "country": "ZAF",
+  "postalCode": "accountAddress_postalCode_1",
+  "townName": "accountAddress_townName_1"
+ },
+ "accountAgentAddress": {
+  "addressLine1": "accountAgentAddress_addressLine1_1",
+  "addressLine2": "accountAgentAddress_addressLine2_1",
+  "addressLine3": "accountAgentAddress_addressLine3_1",
+  "addressType": "accountAgentAddress_addressType_1",
+  "country": "acc",
+  "countrySubDivision": "accountAgentAddress_countrySubDivision_1",
+  "postalCode": "accountAgentAddress_postalCode_1",
+  "townName": "accountAgentAddress_townName_1"
+ },
+ "accountAgentId": "50212",
+ "accountAgentName": "Agent2",
+ "accountBalanceAfter": {
+  "baseCurrency": "zar",
+  "baseValue": 167.98,
+  "currency": "zar",
+  "value": 167.98
+ },
+ "accountId": "e12fceea-418e-4134-8593-26c9100b92a3",
+ "accountName": {
+  "fullName": "George",
+  "namePrefix": "Mr",
+  "surname": "Simpson"
+ },
+ "amount": {
+  "baseCurrency": "zar",
+  "baseValue": 167.98,
+  "currency": "zar",
+  "value": 167.98
+ },
+ "cardEntityId": "375513823628823CarSupplier",
+ "cardId": "4168243573089136",
+ "channel": "",
+ "chargeBearer": "CRED",
+ "counterpartyAddress": {
+  "addressLine1": "counterpartyAddress_addressLine1_1",
+  "addressLine2": "counterpartyAddress_addressLine2_1",
+  "addressLine3": "counterpartyAddress_addressLine3_1",
+  "country": "ZAF",
+  "postalCode": "e1234"
+ },
+ "counterpartyAgentAddress": {
+  "addressLine1": "Kruis Street",
+  "country": "ZAF",
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
+ },
+ "counterpartyAgentId": "50883",
+ "counterpartyAgentName": "Agent7",
+ "counterpartyEntityId": "21",
+ "counterpartyId": "21",
+ "counterpartyName": {},
+ "creationDate": "2023-06-02T13:04:47",
+ "customerEntityId": "1239656234",
+ "customerId": "101",
+ "decorationId": [
+  "decorationId_0"
+ ],
+ "destinationCountry": "ZAF",
+ "device": {
+  "anonymizerInUseFlag": "device_anonymizerInUseFlag_1",
+  "deviceFingerprint": "device_deviceFingerprint_1",
+  "deviceIMEI": "device_deviceIMEI_1",
+  "sessionLatitude": 5391.835331574868,
+  "sessionLongitude": 6200.391276149532
+ },
+ "deviceEntityId": "",
+ "deviceId": "IMEACode",
+ "direction": "inbound",
+ "eventId": "9bbba1c4-0780-4f03-ab98-46354b83c0cd",
+ "eventTime": "2023-06-02T13:04:47",
+ "eventType": "paymentRT",
+ "finalPaymentDate": "2023-06-02",
+ "firstPaymentDate": "2023-06-02",
+ "fromFIBranchId": "",
+ "fromId": "absa",
+ "instructedAgentAddress": {
+  "addressLine1": "Kruis Street",
+  "country": "ZAF",
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
+ },
+ "instructedAgentId": "50883",
+ "instructedAgentName": "Agent7",
+ "instructingAgentAddress": {
+  "addressLine1": "Church Ave",
+  "country": "ZAF",
+  "countrySubDivision": "Gauteng",
+  "postalCode": "1200",
+  "townName": "Pretoria"
+ },
+ "instructingAgentId": "50212",
+ "instructingAgentName": "Agent2",
+ "intermediaryAgent1AccountId": "9204",
+ "intermediaryAgent1Address": {
+  "addressLine1": "Melk Street",
+  "country": "ZAF",
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
+ },
+ "intermediaryAgent1Id": "50884",
+ "intermediaryAgent1Name": "Agent8",
+ "intermediaryAgent2AccountId": "301",
+ "intermediaryAgent2Address": {
+  "addressLine1": "Church Ave",
+  "country": "ZAF",
+  "countrySubDivision": "Gauteng",
+  "postalCode": "1200",
+  "townName": "Pretoria"
+ },
+ "intermediaryAgent2Id": "50212",
+ "intermediaryAgent2Name": "Agent2",
+ "intermediaryAgent3AccountId": "3029",
+ "intermediaryAgent3Address": {
+  "addressLine1": "Long Street",
+  "country": "ZAF",
+  "countrySubDivision": "Western Cape",
+  "postalCode": "1100",
+  "townName": "Cape Town"
+ },
+ "intermediaryAgent3Id": "50723",
+ "intermediaryAgent3Name": "Agent3",
+ "localInstrument": "",
+ "msgStatus": "New",
+ "msgStatusReason": "New Payee",
+ "msgType": "2100",
+ "numberOfTransactions": 1,
+ "paymentClearingSystemReference": "",
+ "paymentFrequency": "ADHO",
+ "paymentMethod": "",
+ "paymentReference": "",
+ "remittanceId": "",
+ "remittanceLocationElectronicAddress": "remittanceLocationElectronicAddress_1",
+ "remittanceLocationMethod": "SMSM",
+ "requestExecutionDate": "2023-06-02",
+ "schemaVersion": 1,
+ "serviceLevelCode": "",
+ "settlementClearingSystemCode": "",
+ "settlementDate": "2023-06-02",
+ "settlementMethod": "CLRG",
+ "tenantId": "absa",
+ "toFIBranchId": "absa",
+ "toId": "absa",
+ "totalAmount": {
+  "baseCurrency": "zar",
+  "baseValue": 167.98,
+  "currency": "zar",
+  "value": 167.98
+ },
+ "transactionId": "c16557c1-ab6f-489c-bde2-24cebd1e0bdd",
+ "transactionType": "RequestToPay",
+ "ultimateAccountAddress": {
+  "addressLine1": "ultimateCounterpartyAddress_addressLine1_1",
+  "addressLine2": "ultimateCounterpartyAddress_addressLine2_1",
+  "addressLine3": "ultimateCounterpartyAddress_addressLine3_1",
+  "country": "ZAF",
+  "postalCode": "2342342"
+ },
+ "ultimateAccountId": "",
+ "ultimateAccountName": {
+  "fullName": "ultimateAccountName_fullName_1",
+  "givenName": "ultimateAccountName_givenName_1",
+  "surname": "ultimateAccountName_surname_1"
+ },
+ "ultimateCounterpartyAddress": {
+  "addressLine1": "ultimateCounterpartyAddress_addressLine1_1",
+  "addressLine2": "ultimateCounterpartyAddress_addressLine2_1",
+  "country": "ZAF",
+  "countrySubDivision": "ultimateCounterpartyAddress_countrySubDivision_1",
+  "latitude": 8534.86390567603,
+  "longitude": 6842.924811568308,
+  "postalCode": "ultimateCounterpartyAddress_postalCode_1",
+  "townName": "ultimateCounterpartyAddress_townName_1"
+ },
+ "ultimateCounterpartyId": "",
+ "ultimateCounterpartyName": {
+  "fullName": "ultimateCounterpartyName_fullName_1",
+  "givenName": "ultimateCounterpartyName_givenName_1",
+  "surname": "ultimateCounterpartyName_surname_1"
+ },
+ "unstructuredRemittanceInformation": "",
+ "verificationResult": "MISS",
+ "verificationType": {
+  "aa": "verificationType_aa_1"
+ }
+}

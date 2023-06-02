@@ -2,19 +2,7 @@
  "entities": [
   {
    "configGroups": [],
-   "entityId": "fnb-77ffa3c1-2aff-423b-bea8-9f35503570de",
-   "entityType": "ACCOUNT",
-   "models": [],
-   "outputTags": [],
-   "overallScore": {
-    "overallScore": null
-   },
-   "riskStatus": "no-risk",
-   "tenantId": "fnb"
-  },
-  {
-   "configGroups": [],
-   "entityId": "16-73",
+   "entityId": "15-81",
    "entityType": "COUNTERPARTY",
    "models": [],
    "outputTags": [],
@@ -22,7 +10,19 @@
     "overallScore": null
    },
    "riskStatus": "no-risk",
-   "tenantId": "fnb"
+   "tenantId": "15"
+  },
+  {
+   "configGroups": [],
+   "entityId": "absa-6512561006021083",
+   "entityType": "CARD",
+   "models": [],
+   "outputTags": [],
+   "overallScore": {
+    "overallScore": null
+   },
+   "riskStatus": "no-risk",
+   "tenantId": "15"
   },
   {
    "configGroups": [],
@@ -34,11 +34,23 @@
     "overallScore": null
    },
    "riskStatus": "no-risk",
-   "tenantId": "fnb"
+   "tenantId": "15"
   },
   {
    "configGroups": [],
-   "entityId": "fnb-401",
+   "entityId": "absa-ab3bd0d5-97b9-40de-bcb4-79c1951272ba",
+   "entityType": "ACCOUNT",
+   "models": [],
+   "outputTags": [],
+   "overallScore": {
+    "overallScore": null
+   },
+   "riskStatus": "no-risk",
+   "tenantId": "15"
+  },
+  {
+   "configGroups": [],
+   "entityId": "absa-301",
    "entityType": "CUSTOMER",
    "models": [],
    "outputTags": [],
@@ -46,19 +58,7 @@
     "overallScore": null
    },
    "riskStatus": "no-risk",
-   "tenantId": "fnb"
-  },
-  {
-   "configGroups": [],
-   "entityId": "fnb-2720999804997981",
-   "entityType": "CARD",
-   "models": [],
-   "outputTags": [],
-   "overallScore": {
-    "overallScore": null
-   },
-   "riskStatus": "no-risk",
-   "tenantId": "fnb"
+   "tenantId": "15"
   }
  ],
  "jsonVersion": 4,
@@ -66,55 +66,55 @@
   "_metadata": {
    "entities": {
     "ACCOUNT": [
-     "fnb-77ffa3c1-2aff-423b-bea8-9f35503570de"
+     "absa-ab3bd0d5-97b9-40de-bcb4-79c1951272ba"
     ],
     "CARD": [
-     "fnb-2720999804997981"
+     "absa-6512561006021083"
     ],
     "COUNTERPARTY": [
-     "16-73"
+     "15-81"
     ],
     "CUSTOMER": [
-     "fnb-401"
+     "absa-301"
     ],
     "DEVICE": [
      "IMEACode"
     ]
    },
-   "eventId": "a20cd36e-c09a-4028-a89c-10745a7e7296",
-   "eventTime": "2023-06-01T09:26:19Z",
+   "eventId": "1d6a4d65-90dc-4826-8aba-02039ed44255",
+   "eventTime": "2023-06-02T07:51:59Z",
    "eventType": "paymentRT",
    "execution": {
     "expectResponse": true
    },
-   "receivedTime": "2023-06-01T07:26:19Z",
+   "receivedTime": "2023-06-02T05:52:00Z",
    "searchable": {
     "accountAddress": {
      "addressLine1": "accountAddress_addressLine1_1",
      "postalCode": "accountAddress_postalCode_1"
     },
-    "accountEntityId": "fnb-77ffa3c1-2aff-423b-bea8-9f35503570de",
-    "cardEntityId": "fnb-2720999804997981",
+    "accountEntityId": "absa-ab3bd0d5-97b9-40de-bcb4-79c1951272ba",
+    "cardEntityId": "absa-6512561006021083",
     "channel": "",
     "counterpartyAddress": {
      "postalCode": "e1234"
     },
     "counterpartyAgentId": "50723",
-    "counterpartyEntityId": "16-73",
-    "customerEntityId": "fnb-401",
+    "counterpartyEntityId": "15-81",
+    "customerEntityId": "absa-301",
     "deviceEntityId": "IMEACode",
     "deviceId": "IMEACode",
-    "eventId": "a20cd36e-c09a-4028-a89c-10745a7e7296",
-    "eventTime": "2023-06-01T09:26:19Z",
+    "eventId": "1d6a4d65-90dc-4826-8aba-02039ed44255",
+    "eventTime": "2023-06-02T07:51:59Z",
     "eventType": "paymentRT",
     "paymentClearingSystemReference": "",
-    "requestExecutionDate": "2023-06-01",
-    "settlementDate": "2023-06-01",
-    "transactionId": "6e029230-abe0-47b3-9481-ddf0161cf9fc"
+    "requestExecutionDate": "2023-06-02",
+    "settlementDate": "2023-06-02",
+    "transactionId": "75f6f3e0-465a-458d-add5-f94037e7b2c1"
    },
-   "systemEventId": "146-iQ2snZrd",
+   "systemEventId": "51-SnTObJjm",
    "tenantId": [
-    "fnb"
+    "15"
    ]
   },
   "accountAddress": {
@@ -134,31 +134,31 @@
    "postalCode": "accountAgentAddress_postalCode_1",
    "townName": "accountAgentAddress_townName_1"
   },
-  "accountAgentId": "50212",
-  "accountAgentName": "Agent2",
+  "accountAgentId": "50881",
+  "accountAgentName": "Agent5",
   "accountBalanceAfter": {
    "baseCurrency": "zar",
-   "baseValue": 523.13,
+   "baseValue": 891.69,
    "currency": "zar",
-   "value": 523.13
+   "value": 891.69
   },
-  "accountEntityId": "fnb-77ffa3c1-2aff-423b-bea8-9f35503570de",
-  "accountId": "77ffa3c1-2aff-423b-bea8-9f35503570de",
+  "accountEntityId": "absa-ab3bd0d5-97b9-40de-bcb4-79c1951272ba",
+  "accountId": "ab3bd0d5-97b9-40de-bcb4-79c1951272ba",
   "accountName": {
-   "fullName": "Ciljee",
+   "fullName": "George",
    "namePrefix": "Mr",
-   "surname": "Klopper"
+   "surname": "Simpson"
   },
   "amount": {
    "baseCurrency": "zar",
-   "baseValue": 523.13,
+   "baseValue": 891.69,
    "currency": "zar",
-   "value": 523.13
+   "value": 891.69
   },
-  "cardEntityId": "fnb-2720999804997981",
-  "cardId": "2720999804997981",
+  "cardEntityId": "absa-6512561006021083",
+  "cardId": "6512561006021083",
   "channel": "",
-  "chargeBearer": "DEBT",
+  "chargeBearer": "SHAR",
   "counterpartyAddress": {
    "addressLine1": "counterpartyAddress_addressLine1_1",
    "addressLine2": "counterpartyAddress_addressLine2_1",
@@ -175,12 +175,12 @@
   },
   "counterpartyAgentId": "50723",
   "counterpartyAgentName": "Agent3",
-  "counterpartyEntityId": "16-73",
-  "counterpartyId": "73",
+  "counterpartyEntityId": "15-81",
+  "counterpartyId": "81",
   "counterpartyName": {},
-  "creationDate": "2023-06-01T09:26:19",
-  "customerEntityId": "fnb-401",
-  "customerId": "401",
+  "creationDate": "2023-06-02T07:51:59",
+  "customerEntityId": "absa-301",
+  "customerId": "301",
   "decorationId": [
    "decorationId_0"
   ],
@@ -194,23 +194,23 @@
   },
   "deviceEntityId": "IMEACode",
   "deviceId": "IMEACode",
-  "direction": "outbound",
-  "eventId": "a20cd36e-c09a-4028-a89c-10745a7e7296",
-  "eventTime": "2023-06-01T09:26:19",
+  "direction": "inbound",
+  "eventId": "1d6a4d65-90dc-4826-8aba-02039ed44255",
+  "eventTime": "2023-06-02T07:51:59",
   "eventType": "paymentRT",
-  "finalPaymentDate": "2023-06-01",
-  "firstPaymentDate": "2023-06-01",
+  "finalPaymentDate": "2023-06-02",
+  "firstPaymentDate": "2023-06-02",
   "fromFIBranchId": "",
-  "fromId": "fnb",
+  "fromId": "15",
   "instructedAgentAddress": {
-   "addressLine1": "Long Street",
+   "addressLine1": "Da Gama Street",
    "country": "ZAF",
-   "countrySubDivision": "Western Cape",
-   "postalCode": "1100",
-   "townName": "Cape Town"
+   "countrySubDivision": "Eastern Cape",
+   "postalCode": "1663",
+   "townName": "JeffreysBay"
   },
-  "instructedAgentId": "50723",
-  "instructedAgentName": "Agent3",
+  "instructedAgentId": "50874",
+  "instructedAgentName": "Agent4",
   "instructingAgentAddress": {
    "addressLine1": "Long Street",
    "country": "ZAF",
@@ -220,16 +220,16 @@
   },
   "instructingAgentId": "50723",
   "instructingAgentName": "Agent3",
-  "intermediaryAgent1AccountId": "9204",
+  "intermediaryAgent1AccountId": "3029",
   "intermediaryAgent1Address": {
-   "addressLine1": "Kruis Street",
+   "addressLine1": "Long Street",
    "country": "ZAF",
-   "countrySubDivision": "Eastern Cape",
-   "postalCode": "1663",
-   "townName": "JeffreysBay"
+   "countrySubDivision": "Western Cape",
+   "postalCode": "1100",
+   "townName": "Cape Town"
   },
-  "intermediaryAgent1Id": "50883",
-  "intermediaryAgent1Name": "Agent7",
+  "intermediaryAgent1Id": "50723",
+  "intermediaryAgent1Name": "Agent3",
   "intermediaryAgent2AccountId": "9204",
   "intermediaryAgent2Address": {
    "addressLine1": "Potter Street",
@@ -256,28 +256,28 @@
   "msgType": "2100",
   "numberOfTransactions": 1,
   "paymentClearingSystemReference": "",
-  "paymentFrequency": "WEEK",
+  "paymentFrequency": "MIAN",
   "paymentMethod": "",
   "paymentReference": "",
   "remittanceId": "",
   "remittanceLocationElectronicAddress": "remittanceLocationElectronicAddress_1",
-  "remittanceLocationMethod": "EDIC",
-  "requestExecutionDate": "2023-06-01",
+  "remittanceLocationMethod": "SMSM",
+  "requestExecutionDate": "2023-06-02",
   "schemaVersion": 1,
   "serviceLevelCode": "",
   "settlementClearingSystemCode": "",
-  "settlementDate": "2023-06-01",
-  "settlementMethod": "INDA",
-  "tenantId": "fnb",
-  "toFIBranchId": "16",
-  "toId": "16",
+  "settlementDate": "2023-06-02",
+  "settlementMethod": "CLRG",
+  "tenantId": "15",
+  "toFIBranchId": "absa",
+  "toId": "absa",
   "totalAmount": {
    "baseCurrency": "zar",
-   "baseValue": 523.13,
+   "baseValue": 891.69,
    "currency": "zar",
-   "value": 523.13
+   "value": 891.69
   },
-  "transactionId": "6e029230-abe0-47b3-9481-ddf0161cf9fc",
+  "transactionId": "75f6f3e0-465a-458d-add5-f94037e7b2c1",
   "transactionType": "RequestToPay",
   "ultimateAccountAddress": {
    "addressLine1": "ultimateCounterpartyAddress_addressLine1_1",
@@ -309,16 +309,21 @@
    "surname": "ultimateCounterpartyName_surname_1"
   },
   "unstructuredRemittanceInformation": "",
-  "verificationResult": "OTHN",
+  "verificationResult": "FAIL",
   "verificationType": {
    "aa": "verificationType_aa_1"
   }
  },
- "outputTime": "2023-06-01T07:26:19.728Z",
+ "outputTime": "2023-06-02T05:52:00.218Z",
  "processorId": "proc",
  "statusCode": "success",
  "versions": {
   "configGroups": [
+   {
+    "id": "ABSA",
+    "type": "analytical",
+    "version": "0"
+   },
    {
     "type": "global",
     "version": "1"

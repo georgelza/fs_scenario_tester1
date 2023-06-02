@@ -1,0 +1,197 @@
+{
+ "accountAddress": {
+  "addressLine1": "accountAddress_addressLine1_1",
+  "addressLine2": "accountAddress_addressLine2_1",
+  "country": "ZAF",
+  "postalCode": "accountAddress_postalCode_1",
+  "townName": "accountAddress_townName_1"
+ },
+ "accountAgentAddress": {
+  "addressLine1": "accountAgentAddress_addressLine1_1",
+  "addressLine2": "accountAgentAddress_addressLine2_1",
+  "addressLine3": "accountAgentAddress_addressLine3_1",
+  "addressType": "accountAgentAddress_addressType_1",
+  "country": "acc",
+  "countrySubDivision": "accountAgentAddress_countrySubDivision_1",
+  "postalCode": "accountAgentAddress_postalCode_1",
+  "townName": "accountAgentAddress_townName_1"
+ },
+ "accountAgentId": "50881",
+ "accountAgentName": "Agent5",
+ "accountBalanceAfter": {
+  "baseCurrency": "zar",
+  "baseValue": 891.69,
+  "currency": "zar",
+  "value": 891.69
+ },
+ "accountId": "ab3bd0d5-97b9-40de-bcb4-79c1951272ba",
+ "accountName": {
+  "fullName": "George",
+  "namePrefix": "Mr",
+  "surname": "Simpson"
+ },
+ "amount": {
+  "baseCurrency": "zar",
+  "baseValue": 891.69,
+  "currency": "zar",
+  "value": 891.69
+ },
+ "cardEntityId": "345738377802334CarSupplier",
+ "cardId": "6512561006021083",
+ "channel": "",
+ "chargeBearer": "SHAR",
+ "counterpartyAddress": {
+  "addressLine1": "counterpartyAddress_addressLine1_1",
+  "addressLine2": "counterpartyAddress_addressLine2_1",
+  "addressLine3": "counterpartyAddress_addressLine3_1",
+  "country": "ZAF",
+  "postalCode": "e1234"
+ },
+ "counterpartyAgentAddress": {
+  "addressLine1": "Long Street",
+  "country": "ZAF",
+  "countrySubDivision": "Western Cape",
+  "postalCode": "1100",
+  "townName": "Cape Town"
+ },
+ "counterpartyAgentId": "50723",
+ "counterpartyAgentName": "Agent3",
+ "counterpartyEntityId": "81",
+ "counterpartyId": "81",
+ "counterpartyName": {},
+ "creationDate": "2023-06-02T07:51:59",
+ "customerEntityId": "23434545345",
+ "customerId": "301",
+ "decorationId": [
+  "decorationId_0"
+ ],
+ "destinationCountry": "ZAF",
+ "device": {
+  "anonymizerInUseFlag": "device_anonymizerInUseFlag_1",
+  "deviceFingerprint": "device_deviceFingerprint_1",
+  "deviceIMEI": "device_deviceIMEI_1",
+  "sessionLatitude": 5391.835331574868,
+  "sessionLongitude": 6200.391276149532
+ },
+ "deviceEntityId": "",
+ "deviceId": "IMEACode",
+ "direction": "inbound",
+ "eventId": "1d6a4d65-90dc-4826-8aba-02039ed44255",
+ "eventTime": "2023-06-02T07:51:59",
+ "eventType": "paymentRT",
+ "finalPaymentDate": "2023-06-02",
+ "firstPaymentDate": "2023-06-02",
+ "fromFIBranchId": "",
+ "fromId": "15",
+ "instructedAgentAddress": {
+  "addressLine1": "Da Gama Street",
+  "country": "ZAF",
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
+ },
+ "instructedAgentId": "50874",
+ "instructedAgentName": "Agent4",
+ "instructingAgentAddress": {
+  "addressLine1": "Long Street",
+  "country": "ZAF",
+  "countrySubDivision": "Western Cape",
+  "postalCode": "1100",
+  "townName": "Cape Town"
+ },
+ "instructingAgentId": "50723",
+ "instructingAgentName": "Agent3",
+ "intermediaryAgent1AccountId": "3029",
+ "intermediaryAgent1Address": {
+  "addressLine1": "Long Street",
+  "country": "ZAF",
+  "countrySubDivision": "Western Cape",
+  "postalCode": "1100",
+  "townName": "Cape Town"
+ },
+ "intermediaryAgent1Id": "50723",
+ "intermediaryAgent1Name": "Agent3",
+ "intermediaryAgent2AccountId": "9204",
+ "intermediaryAgent2Address": {
+  "addressLine1": "Potter Street",
+  "country": "ZAF",
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
+ },
+ "intermediaryAgent2Id": "50881",
+ "intermediaryAgent2Name": "Agent5",
+ "intermediaryAgent3AccountId": "9204",
+ "intermediaryAgent3Address": {
+  "addressLine1": "Kruis Street",
+  "country": "ZAF",
+  "countrySubDivision": "Eastern Cape",
+  "postalCode": "1663",
+  "townName": "JeffreysBay"
+ },
+ "intermediaryAgent3Id": "50883",
+ "intermediaryAgent3Name": "Agent7",
+ "localInstrument": "",
+ "msgStatus": "New",
+ "msgStatusReason": "New Payee",
+ "msgType": "2100",
+ "numberOfTransactions": 1,
+ "paymentClearingSystemReference": "",
+ "paymentFrequency": "MIAN",
+ "paymentMethod": "",
+ "paymentReference": "",
+ "remittanceId": "",
+ "remittanceLocationElectronicAddress": "remittanceLocationElectronicAddress_1",
+ "remittanceLocationMethod": "SMSM",
+ "requestExecutionDate": "2023-06-02",
+ "schemaVersion": 1,
+ "serviceLevelCode": "",
+ "settlementClearingSystemCode": "",
+ "settlementDate": "2023-06-02",
+ "settlementMethod": "CLRG",
+ "tenantId": "15",
+ "toFIBranchId": "absa",
+ "toId": "absa",
+ "totalAmount": {
+  "baseCurrency": "zar",
+  "baseValue": 891.69,
+  "currency": "zar",
+  "value": 891.69
+ },
+ "transactionId": "75f6f3e0-465a-458d-add5-f94037e7b2c1",
+ "transactionType": "RequestToPay",
+ "ultimateAccountAddress": {
+  "addressLine1": "ultimateCounterpartyAddress_addressLine1_1",
+  "addressLine2": "ultimateCounterpartyAddress_addressLine2_1",
+  "addressLine3": "ultimateCounterpartyAddress_addressLine3_1",
+  "country": "ZAF",
+  "postalCode": "2342342"
+ },
+ "ultimateAccountId": "",
+ "ultimateAccountName": {
+  "fullName": "ultimateAccountName_fullName_1",
+  "givenName": "ultimateAccountName_givenName_1",
+  "surname": "ultimateAccountName_surname_1"
+ },
+ "ultimateCounterpartyAddress": {
+  "addressLine1": "ultimateCounterpartyAddress_addressLine1_1",
+  "addressLine2": "ultimateCounterpartyAddress_addressLine2_1",
+  "country": "ZAF",
+  "countrySubDivision": "ultimateCounterpartyAddress_countrySubDivision_1",
+  "latitude": 8534.86390567603,
+  "longitude": 6842.924811568308,
+  "postalCode": "ultimateCounterpartyAddress_postalCode_1",
+  "townName": "ultimateCounterpartyAddress_townName_1"
+ },
+ "ultimateCounterpartyId": "",
+ "ultimateCounterpartyName": {
+  "fullName": "ultimateCounterpartyName_fullName_1",
+  "givenName": "ultimateCounterpartyName_givenName_1",
+  "surname": "ultimateCounterpartyName_surname_1"
+ },
+ "unstructuredRemittanceInformation": "",
+ "verificationResult": "FAIL",
+ "verificationType": {
+  "aa": "verificationType_aa_1"
+ }
+}
