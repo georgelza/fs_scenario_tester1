@@ -262,8 +262,11 @@ type TPaymentRT struct {
 }
 
 type TTenant struct {
-	Name     string `json:"name,omitempty"`
-	TenantId string `json:"tenantid,omitempty"`
+	Name             string `json:"name,omitempty"`
+	TenantId         string `json:"tenantid,omitempty"`
+	BranchRangeStart int    `json:"branchrangestart,omitempty"`
+	BranchRangeEnd   int    `json:"branchrangeend,omitempty"`
+	Bicfi            string `json:"bicfi,omitempty"`
 }
 
 type TEntity struct {
@@ -271,7 +274,7 @@ type TEntity struct {
 	Name          string `json:"name,omitempty"`
 	EntityId      string `json:"entityid,omitempty"`
 	TenantId      string `json:"tenantid,omitempty"`
-	AccountNumber string `json:"accountnumber,omitempty"`
+	AccountNumber string `json:"accountNumber,omitempty"`
 }
 
 type TPayer struct {

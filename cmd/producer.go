@@ -264,9 +264,15 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 
 	cTenant := gofakeit.Number(0, tenantCount) // tenants - to Bank
 	jTenant := varSeed.Tenants[cTenant]
+	jTenantBranchId := gofakeit.Number(jTenant.BranchRangeStart, jTenant.BranchRangeEnd)
 
 	cTo := gofakeit.Number(0, tenantCount)
 	jTo := varSeed.Tenants[cTo]
+	jToBranchId := gofakeit.Number(jTo.BranchRangeStart, jTo.BranchRangeEnd)
+
+	paymentFrequencyCount := len(varSeed.PaymentFrequency) - 1
+	nPaymentFrequency := gofakeit.Number(0, paymentFrequencyCount)
+	paymentFrequency := varSeed.PaymentFrequency[nPaymentFrequency]
 
 	nAmount := gofakeit.Price(vGeneral.MinTransactionValue, vGeneral.MaxTransactionValue)
 	t_amount := &types.TAmount{
@@ -317,19 +323,21 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 		"counterpartyEntityId":           strconv.Itoa(gofakeit.Number(0, 9999)),
 		"counterpartyId":                 strconv.Itoa(gofakeit.Number(10000, 19999)),
 		"customerEntityId":               "customerEntityId_1",
-		"creationTime":                   time.Now().Format("2006-01-02T15:04:05"),
+		"customerId":                     jMerchant.EntityId,
+		"creationDate":                   time.Now().Format("2006-01-02T15:04:05"),
 		"destinationCountry":             "ZAF",
 		"direction":                      cDirection,
 		"eventId":                        uuid.New().String(),
 		"eventTime":                      time.Now().Format("2006-01-02T15:04:05"),
 		"eventType":                      "paymentNRT",
-		"fromFIBranchId":                 "",
+		"fromFIBranchId":                 jTenantBranchId,
 		"fromId":                         jTenant.TenantId,
 		"localInstrument":                "42",
 		"msgStatus":                      "Success",
 		"msgType":                        "RCCT",
 		"numberOfTransactions":           1,
-		"paymentClearingSystemReference": 2,
+		"paymentClearingSystemReference": uuid.New().String(),
+		"paymentFrequency":               paymentFrequency,
 		"paymentMethod":                  "TRF",
 		"paymentReference":               "sdfsfd",
 		"remittanceId":                   "sdfsdsd",
@@ -339,7 +347,7 @@ func contructPaymentNRTFromFake() (t_Payment map[string]interface{}) {
 		"settlementDate":                 time.Now().Format("2006-01-02"),
 		"settlementMethod":               "CLRG",
 		"tenantId":                       jTenant.TenantId,
-		"toFIBranchId":                   jTo.TenantId,
+		"toFIBranchId":                   jToBranchId,
 		"toId":                           jTo.TenantId,
 		"totalAmount":                    t_amount,
 		"transactionId":                  uuid.New().String(),
@@ -388,7 +396,9 @@ func contructPaymentRTFromFake() (t_Payment map[string]interface{}) {
 
 	cId := gofakeit.Number(0, tenantCount)
 	jToID := varSeed.Tenants[cId] // tenants - to Bank
+	jToBranchId := gofakeit.Number(jToID.BranchRangeStart, jToID.BranchRangeEnd)
 	jTenant := varSeed.Tenants[gofakeit.Number(0, tenantCount)]
+	jTenantBranchId := gofakeit.Number(jTenant.BranchRangeStart, jTenant.BranchRangeEnd)
 
 	nChargeBearers := gofakeit.Number(0, chargeBearersCount)
 	//cCounterPartyAgent := gofakeit.Number(0, agentsCount) // Agents
@@ -509,7 +519,7 @@ func contructPaymentRTFromFake() (t_Payment map[string]interface{}) {
 		"eventType":                           "paymentRT",
 		"finalPaymentDate":                    time.Now().Format("2006-01-02"),
 		"firstPaymentDate":                    time.Now().Format("2006-01-02"),
-		"fromFIBranchId":                      "",
+		"fromFIBranchId":                      jTenantBranchId,
 		"fromId":                              jTenant.TenantId,
 		"instructedAgentId":                   jInstructedAgent.Id,
 		"instructedAgentName":                 jInstructedAgent.Name,
@@ -548,7 +558,7 @@ func contructPaymentRTFromFake() (t_Payment map[string]interface{}) {
 		"settlementDate":                      time.Now().Format("2006-01-02"),
 		"settlementMethod":                    varSeed.SettlementMethod[nSettlementMethod],
 		"tenantId":                            jTenant.TenantId,
-		"toFIBranchId":                        jToID.TenantId,
+		"toFIBranchId":                        jToBranchId,
 		"toId":                                jToID.TenantId,
 		"totalAmount":                         t_amount,
 		"transactionId":                       uuid.New().String(),
